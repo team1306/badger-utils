@@ -1,0 +1,124 @@
+plugins {
+    id 'java'
+    id "com.diffplug.spotless" version "7.2.1"
+    id("io.freefair.lombok") version "8.12.2.1"
+    id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2025.+'
+    id 'maven-publish'
+    id("net.ltgt.errorprone") version "4.2.0"
+}
+
+group = 'team1306'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'edu.wpi.first.ntcore:ntcore-java:2025.+'
+
+    compileOnly 'edu.wpi.first.wpilibNewCommands:wpilibNewCommands-java:2025.+'
+    compileOnly 'edu.wpi.first.wpiunits:wpiunits-java:2025.+'
+    compileOnly 'edu.wpi.first.wpimath:wpimath-java:2025.+'
+    compileOnly 'edu.wpi.first.wpilibj:wpilibj-java:2025.+'
+    compileOnly 'edu.wpi.first.wpiutil:wpiutil-java:2025.+'
+    compileOnly 'edu.wpi.first.hal:hal-java:2025.+'
+
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
+
+    compileOnly 'com.google.auto.service:auto-service:1.0-rc5'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc5'
+    
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            groupId = "com.github.team1306"
+            artifactId = "badger-log"
+        }
+    }
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+jar {
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << '-Xlint:processing'
+}
+
+tasks.withType(Javadoc) {
+    options {
+        docTitle = "Badger Utils Javadoc"
+    }
+}
+
+
+javadoc {
+    exclude 'com.fasterxml.jackson.annotation.JsonAutoDetect'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+apply plugin: 'groovy'
+spotless {
+    enforceCheck false
+
+    encoding 'UTF-8'
+    lineEndings 'UNIX'
+
+    java {
+        eclipse().configFile('eclipse-java-style.xml')
+        target 'src/**/*.java'
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+
+    groovy {
+        importOrder()
+        excludeJava()
+        greclipse()
+    }
+
+    groovyGradle {
+        greclipse()
+    }
+
+    json {
+        target '**/*.json'
+        simple().indentWithSpaces(2)
+    }
+
+    format 'misc', {
+        target '.gitignore'
+
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}

@@ -46,7 +46,7 @@ public class StateMachine<T extends Enum<T>> {
         
         if(!transition.isValid()) return false;
         
-        return stateGuards.getEdges(transition).stream().allMatch((guard) -> guard.canChange(transition));
+        return stateGuards.getGuards(transition).stream().allMatch((guard) -> guard.canChange(transition));
     }
     
     public void tryChangeState(T nextState) {

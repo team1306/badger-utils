@@ -1,7 +1,8 @@
 package frc.robot;
 
 import badgerlog.Dashboard;
-import badgerutils.subsystem.StateBoundary;
+import badgerutils.subsystem.Edges;
+import badgerutils.subsystem.Guards;
 import badgerutils.subsystem.StateEdge;
 import badgerutils.subsystem.StateMachine;
 import badgerutils.subsystem.Transition;
@@ -10,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Robot extends TimedRobot {
     public enum RobotState {
@@ -24,19 +26,17 @@ public class Robot extends TimedRobot {
     private final StateMachine<RobotState> stateMachine;
     
     public Robot(){
-        Map<Transition<RobotState>, StateEdge<RobotState>> edges = Map.of(
-                Transition.createTransition(RobotState.DISABLED, List.of(RobotState.AUTONOMOUS, RobotState.TELEOP, RobotState.TEST)), (current, next) -> System.out.println("Enabled to: " + next),
-                Transition.createToTransition(RobotState.E_STOP), (current, next) -> System.out.println("E-Stopped"),
-                Transition.createToTransition(RobotState.A_STOP), (current, next) -> System.out.println("A-Stopped"),
-                Transition.createToTransition(RobotState.DISABLED), (current, next) -> System.out.println("Disabled from: " + current)
-        );
+        Edges<RobotState> edges = new Edges<>();
+        edges.addTowardsEdge(RobotState.DISABLED, Set.of(RobotState.AUTONOMOUS, RobotState.TELEOP, RobotState.TEST), (state) -> System.out.println("Enabled to: " + state.nextState()));
+        edges.addFromAllEdge(RobotState.E_STOP, state -> System.out.println("E-Stopped"));
+        edges.addFromAllEdge(RobotState.A_STOP, state -> System.out.println("A-Stopped"));
+        edges.addFromAllEdge(RobotState.DISABLED, state -> System.out.println("Disabled from: " + state.currentState()));
         
-        Map<Transition<RobotState>, StateBoundary<RobotState>> boundaries = Map.of(
-                Transition.createFromTransition(RobotState.E_STOP), (current, next) -> false,
-                Transition.createTransition(RobotState.A_STOP, RobotState.AUTONOMOUS), (current, next) -> false
-        );
+        Guards<RobotState> guards = new Guards<>();
+        guards.addTowardsAllGuard(RobotState.E_STOP, (state) -> false);
+        guards.addTransitionGuard(RobotState.A_STOP, RobotState.AUTONOMOUS, (state) -> false);
         
-        stateMachine = new StateMachine<>(RobotState.DISABLED, edges, boundaries);
+        stateMachine = new StateMachine<>(RobotState.DISABLED, edges, guards);
                 
         Dashboard.createSelectorFromEnum("Robot State Selector", RobotState.class, RobotState.DISABLED, (value) -> {
             stateMachine.tryChangeState((RobotState) value);

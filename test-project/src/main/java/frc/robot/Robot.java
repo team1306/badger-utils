@@ -6,7 +6,6 @@ import badgerutils.subsystem.StateEdge;
 import badgerutils.subsystem.StateMachine;
 import badgerutils.subsystem.Transition;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import java.util.List;

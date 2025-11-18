@@ -4,7 +4,7 @@ Utilities used by BadgerBOTS in robot code
 ## Installation
 
 Add 
-```java
+```
 https://raw.githubusercontent.com/team1306/badger-utils/master/vendordep.json
 ```
 

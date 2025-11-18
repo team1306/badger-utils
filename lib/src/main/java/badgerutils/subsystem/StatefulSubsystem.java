@@ -12,26 +12,9 @@ import java.util.Map;
 public class StatefulSubsystem<T extends Enum<T>> extends SubsystemBase {
 
     private final StateMachine<T> stateMachine;
-
-    /**
-     * Wraps the {@link StateMachine#StateMachine(Enum, Map, Map)} constructor
-     */
-    public StatefulSubsystem(T initialState, Map<Transition<T>, StateEdge<T>> transitions, Map<Transition<T>, StateBoundary<T>> stateBoundaries) {
-        stateMachine = new StateMachine<>(initialState, transitions, stateBoundaries);
-    }
-
-    /**
-     * Wraps the {@link StateMachine#StateMachine(Enum, Map)} constructor
-     */
-    public StatefulSubsystem(T initialState, Map<Transition<T>, StateEdge<T>> transitions) {
-        stateMachine = new StateMachine<>(initialState, transitions);
-    }
-
-    /**
-     * Wraps the {@link StateMachine#StateMachine(Map, Enum)} constructor
-     */
-    public StatefulSubsystem(Map<Transition<T>, StateBoundary<T>> stateBoundaries, T initialState) {
-        stateMachine = new StateMachine<>(stateBoundaries, initialState);
+    
+    public StatefulSubsystem(StateMachine<T> stateMachine) {
+        this.stateMachine = stateMachine;
     }
 
     /**

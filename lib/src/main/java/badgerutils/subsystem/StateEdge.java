@@ -7,8 +7,5 @@ package badgerutils.subsystem;
  */
 @FunctionalInterface
 public interface StateEdge<T extends Enum<T>> {
-    /**
-     * Performs a transition between two states. Can be an operation that changes robot state
-     */
-    void performTransition(T currentState, T nextState);
+    void performTransition(Transition<T> transition);
 }

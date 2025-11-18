@@ -1,97 +1,59 @@
-// Copyright (c) FIRST and other WPILib contributors.
-
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
+import badgerlog.Dashboard;
+import badgerutils.subsystem.StateBoundary;
+import badgerutils.subsystem.StateEdge;
+import badgerutils.subsystem.StateMachine;
+import badgerutils.subsystem.Transition;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import java.util.List;
+import java.util.Map;
 
-
-public class Robot extends TimedRobot
-{
-    private Command autonomousCommand;
-    
-    private final RobotContainer robotContainer;
-    
-    
-    public Robot()
-    {
-        robotContainer = new RobotContainer();
+public class Robot extends TimedRobot {
+    public enum RobotState {
+        E_STOP,
+        A_STOP,
+        DISABLED,
+        TELEOP,
+        AUTONOMOUS,
+        TEST
     }
     
+    private final StateMachine<RobotState> stateMachine;
+    
+    public Robot(){
+        Map<Transition<RobotState>, StateEdge<RobotState>> edges = Map.of(
+                Transition.createTransition(RobotState.DISABLED, List.of(RobotState.AUTONOMOUS, RobotState.TELEOP, RobotState.TEST)), (current, next) -> System.out.println("Enabled to: " + next),
+                Transition.createToTransition(RobotState.E_STOP), (current, next) -> System.out.println("E-Stopped"),
+                Transition.createToTransition(RobotState.A_STOP), (current, next) -> System.out.println("A-Stopped"),
+                Transition.createToTransition(RobotState.DISABLED), (current, next) -> System.out.println("Disabled from: " + current)
+        );
+        
+        Map<Transition<RobotState>, StateBoundary<RobotState>> boundaries = Map.of(
+                Transition.createFromTransition(RobotState.E_STOP), (current, next) -> false,
+                Transition.createTransition(RobotState.A_STOP, RobotState.AUTONOMOUS), (current, next) -> false
+        );
+        
+        stateMachine = new StateMachine<>(RobotState.DISABLED, edges, boundaries);
+                
+        Dashboard.createSelectorFromEnum("Robot State Selector", RobotState.class, RobotState.DISABLED, (value) -> {
+            stateMachine.tryChangeState((RobotState) value);
+            Dashboard.putValue("Robot State", value.toString());
+        });
+        
+    }
     
     @Override
     public void robotPeriodic()
     {
+        Dashboard.putValue("Actual Robot State", stateMachine.getCurrentState().toString());
+        Dashboard.update();
         CommandScheduler.getInstance().run();
     }
     
-    
-    @Override
-    public void disabledInit() {}
-    
-    
-    @Override
-    public void disabledPeriodic() {}
-    
-    
-    @Override
-    public void disabledExit() {}
-    
-    
-    @Override
-    public void autonomousInit()
-    {
-        autonomousCommand = robotContainer.getAutonomousCommand();
-        
-        if (autonomousCommand != null)
-        {
-            autonomousCommand.schedule();
-        }
-    }
-    
-    
-    @Override
-    public void autonomousPeriodic() {}
-    
-    
-    @Override
-    public void autonomousExit() {}
-    
-    
-    @Override
-    public void teleopInit()
-    {
-        if (autonomousCommand != null)
-        {
-            autonomousCommand.cancel();
-        }
-    }
-    
-    
     @Override
     public void teleopPeriodic() {}
-    
-    
-    @Override
-    public void teleopExit() {}
-    
-    
-    @Override
-    public void testInit()
-    {
-        CommandScheduler.getInstance().cancelAll();
-    }
-    
-    
-    @Override
-    public void testPeriodic() {}
-    
-    
-    @Override
-    public void testExit() {}
 }

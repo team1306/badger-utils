@@ -3,6 +3,7 @@ plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2025.3.2"
     id "idea"
+    id 'io.freefair.aspectj.post-compile-weaving' version '8.14'
 }
 
 def javaVersion = JavaVersion.VERSION_17
@@ -80,6 +81,10 @@ dependencies {
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
 
     implementation files("../lib/build/libs/lib.jar")
+
+    implementation 'org.aspectj:aspectjrt:1.9.24'
+    aspect 'com.github.team1306:badger-log:2025.4.1'
+    annotationProcessor 'com.github.team1306:badger-log:2025.4.1'
 }
 
 test{

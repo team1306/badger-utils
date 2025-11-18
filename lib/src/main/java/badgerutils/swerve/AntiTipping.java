@@ -38,11 +38,12 @@ import java.util.function.Supplier;
 public class AntiTipping {
     private final Supplier<Double> pitchSupplier;
     private final Supplier<Double> rollSupplier;
-
-    /** 
+    private final double kP; // proportional gain
+    /**
      * -- SETTER --
-     * Sets the tipping detection threshold in degrees. 
-     * */
+     * Sets the tipping detection threshold in degrees.
+     *
+     */
     @Setter
     private double tippingThresholdDegrees;
     /**
@@ -51,34 +52,36 @@ public class AntiTipping {
      */
     @Setter
     private double maxCorrectionSpeed; // m/s
-    private final double kP; // proportional gain
-
     /**
      * -- GETTER --
-     * Returns the most recent pitch value in degrees. 
+     * Returns the most recent pitch value in degrees.
      */
     @Getter
     private double pitch = 0.0;
     /**
      * -- GETTER --
-     * Returns the most recent roll value in degrees. 
+     * Returns the most recent roll value in degrees.
      */
     @Getter
     private double roll = 0.0;
     private double correctionSpeed = 0.0;
+
     @Getter
     private double inclinationMagnitude = 0.0;
+
     @Getter
     private double yawDirectionDeg = 0.0;
     /**
      * -- GETTER --
-     * Returns 
-     *  if the robot is currently beyond the tipping threshold. 
+     * Returns
+     * if the robot is currently beyond the tipping threshold.
      */
     @Getter
     private boolean isTipping = false;
+
     @Getter
     private Rotation2d tiltDirection = new Rotation2d();
+
     @Getter
     private ChassisSpeeds speeds = new ChassisSpeeds();
 

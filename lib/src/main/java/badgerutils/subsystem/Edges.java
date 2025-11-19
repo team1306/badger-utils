@@ -13,37 +13,37 @@ public class Edges<T extends Enum<T>> {
         return new Edges<>();
     }
 
-    public Edges<T> addEnteringAndLeavingEdge(T currentState, T nextState, StateEdge<T> stateEdge) {
-        addAllPartialTransitions(Set.of(currentState), Set.of(nextState), stateEdge);
+    public Edges<T> leavingStateAndEnteringState(T previousState, T nextState, StateEdge<T> stateEdge) {
+        addAllPartialTransitions(Set.of(previousState), Set.of(nextState), stateEdge);
         return this;
     }
 
-    public Edges<T> addEnteringAndLeavingEdge(Set<T> currentState, Set<T> nextStates, StateEdge<T> edge){
-        addAllPartialTransitions(currentState, nextStates, edge);
+    public Edges<T> leavingStatesAndEnteringStates(Set<T> previousStates, Set<T> nextStates, StateEdge<T> edge){
+        addAllPartialTransitions(previousStates, nextStates, edge);
         return this;
     }
     
-    public Edges<T> addEnteringAnyEdge(T currentState, StateEdge<T> edge){
-        addAllPartialTransitions(Set.of(currentState), Set.of(), edge);
+    public Edges<T> leavingToAnyState(T previousState, StateEdge<T> edge){
+        addAllPartialTransitions(Set.of(previousState), Set.of(), edge);
         return this;
     }
 
-    public Edges<T> addLeavingAnyEdge(T nextState, StateEdge<T> edge){
+    public Edges<T> enteringFromAnyState(T nextState, StateEdge<T> edge){
         addAllPartialTransitions(Set.of(), Set.of(nextState), edge);
         return this;
     }
 
-    public Edges<T> addEnteringEdge(T currentState, Set<T> nextStates, StateEdge<T> edge){
-        addAllPartialTransitions(Set.of(currentState), nextStates, edge);
+    public Edges<T> leavingToState(T previousState, Set<T> nextStates, StateEdge<T> edge){
+        addAllPartialTransitions(Set.of(previousState), nextStates, edge);
         return this;
     }
 
-    public Edges<T> addLeavingEdge(Set<T> currentState, T nextStates, StateEdge<T> edge){
-        addAllPartialTransitions(currentState, Set.of(nextStates), edge);
+    public Edges<T> enteringFromState(Set<T> previousStates, T nextState, StateEdge<T> edge){
+        addAllPartialTransitions(previousStates, Set.of(nextState), edge);
         return this;
     }
     
-    public Edges<T> addEnteringAndLeavingAnyEdge(StateEdge<T> edge){    
+    public Edges<T> leavingAndEnteringAnyState(StateEdge<T> edge){    
         addAllPartialTransitions(Set.of(), Set.of(), edge);
         return this;
     }
@@ -51,7 +51,7 @@ public class Edges<T extends Enum<T>> {
     public List<StateEdge<T>> getEdges(Transition<T> transition) {
         ArrayList<StateEdge<T>> edges = new ArrayList<>();
         edges.addAll(getEdgeFromKey(transition));
-        edges.addAll(getEdgeFromKey(new Transition<>(transition.currentState(), null)));
+        edges.addAll(getEdgeFromKey(new Transition<>(transition.previousState(), null)));
         edges.addAll(getEdgeFromKey(new Transition<>(null, transition.nextState())));
         edges.addAll(getEdgeFromKey(new Transition<>(null, null)));
         return edges;
@@ -61,8 +61,8 @@ public class Edges<T extends Enum<T>> {
         return edges.getOrDefault(transition, new ArrayList<>());
     }
     
-    private void addAllPartialTransitions(Set<T> currentStates, Set<T> nextStates, StateEdge<T> edge) {
-        PartialTransition<T> partialPart = new PartialTransition<>(currentStates, nextStates);
+    private void addAllPartialTransitions(Set<T> previousStates, Set<T> nextStates, StateEdge<T> edge) {
+        PartialTransition<T> partialPart = new PartialTransition<>(previousStates, nextStates);
         for (Transition<T> transition : partialPart.expandToTransitions()){
             edges.computeIfAbsent(transition, key -> new ArrayList<>()).add(edge);
         }

@@ -2,10 +2,6 @@ package badgerutils.subsystem;
 
 import lombok.Getter;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 /**
  * Implements the advanced features possible with a state machine.
  * <p>
@@ -63,7 +59,7 @@ public class StateMachine<T extends Enum<T>> {
         return true;
     }
     
-    public void forceChangeState(T nextState) {
+    public void setStateWithoutGuardsOrEdges(T nextState) {
         currentState = nextState;
     }
 }

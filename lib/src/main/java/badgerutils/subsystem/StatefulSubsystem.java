@@ -27,8 +27,8 @@ public class StatefulSubsystem<T extends Enum<T>> extends SubsystemBase {
     /**
      * Wraps the {@link StateMachine#canChangeState(Enum)}
      */
-    public void tryChangeState(T toState) {
-        stateMachine.tryChangeState(toState);
+    public boolean tryChangeState(T toState) {
+        return stateMachine.tryChangeState(toState);
     }
 
     /**

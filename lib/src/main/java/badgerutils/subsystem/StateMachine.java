@@ -49,9 +49,9 @@ public class StateMachine<T extends Enum<T>> {
         return stateGuards.getGuards(transition).stream().allMatch((guard) -> guard.canChange(transition));
     }
     
-    public void tryChangeState(T nextState) {
+    public boolean tryChangeState(T nextState) {
         if (!canChangeState(nextState)) {
-            return;
+            return false;
         }
         Transition<T> transition = new Transition<>(currentState, nextState);
         
@@ -59,6 +59,11 @@ public class StateMachine<T extends Enum<T>> {
             edge.performTransition(transition);
         }
 
+        currentState = nextState;
+        return true;
+    }
+    
+    public void forceChangeState(T nextState) {
         currentState = nextState;
     }
 }

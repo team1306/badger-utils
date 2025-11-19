@@ -13,37 +13,37 @@ public class Guards <T extends Enum<T>> {
         return new Guards<>();
     }
 
-    public Guards<T> addEnteringAndLeavingGuard(T currentState, T nextState, StateGuardCondition<T> guard) {
-        addAllPartialTransitions(Set.of(currentState), Set.of(nextState), guard);
+    public Guards<T> leavingStateAndEnteringState(T previousState, T nextState, StateGuardCondition<T> guard) {
+        addAllPartialTransitions(Set.of(previousState), Set.of(nextState), guard);
         return this;
     }
 
-    public Guards<T> addEnteringAndLeavingGuard(Set<T> currentState, Set<T> nextStates, StateGuardCondition<T> guard){
-        addAllPartialTransitions(currentState, nextStates, guard);
+    public Guards<T> leavingStatesAndEnteringStates(Set<T> previousState, Set<T> nextStates, StateGuardCondition<T> guard){
+        addAllPartialTransitions(previousState, nextStates, guard);
         return this;
     }
 
-    public Guards <T> addEnteringAnyGuard(T currentState, StateGuardCondition<T> guard){
-        addAllPartialTransitions(Set.of(currentState), Set.of(), guard);
+    public Guards <T> leavingToAnyState(T previousState, StateGuardCondition<T> guard){
+        addAllPartialTransitions(Set.of(previousState), Set.of(), guard);
         return this;
     }
 
-    public Guards <T> addLeavingAnyGuard(T nextState, StateGuardCondition<T> guard){
+    public Guards <T> enteringFromAnyState(T nextState, StateGuardCondition<T> guard){
         addAllPartialTransitions(Set.of(), Set.of(nextState), guard);
         return this;
     }
 
-    public Guards <T> addEnteringGuard(T currentState, Set<T> nextStates, StateGuardCondition<T> guard){
-        addAllPartialTransitions(Set.of(currentState), nextStates, guard);
+    public Guards <T> leavingToState(T previousState, Set<T> nextStates, StateGuardCondition<T> guard){
+        addAllPartialTransitions(Set.of(previousState), nextStates, guard);
         return this;
     }
 
-    public Guards <T> addLeavingGuard(Set<T> currentState, T nextStates, StateGuardCondition<T> guard){
-        addAllPartialTransitions(currentState, Set.of(nextStates), guard);
+    public Guards <T> enteringFromState(Set<T> previousState, T nextStates, StateGuardCondition<T> guard){
+        addAllPartialTransitions(previousState, Set.of(nextStates), guard);
         return this;
     }
     
-    public Guards <T> addEnteringAndLeavingAnyGuard(StateGuardCondition<T> guard){
+    public Guards <T> leavingAndEnteringAnyState(StateGuardCondition<T> guard){
         addAllPartialTransitions(Set.of(), Set.of(), guard);
         return this;
     }
@@ -51,7 +51,7 @@ public class Guards <T extends Enum<T>> {
     public List<StateGuardCondition<T>> getGuards(Transition<T> transition) {
         ArrayList<StateGuardCondition<T>> guards = new ArrayList<>();
         guards.addAll(getGuardFromKey(transition));
-        guards.addAll(getGuardFromKey(new Transition<>(transition.currentState(), null)));
+        guards.addAll(getGuardFromKey(new Transition<>(transition.previousState(), null)));
         guards.addAll(getGuardFromKey(new Transition<>(null, transition.nextState())));
         guards.addAll(getGuardFromKey(new Transition<>(null, null)));
         return guards;   
@@ -61,8 +61,8 @@ public class Guards <T extends Enum<T>> {
         return guards.getOrDefault(transition, new ArrayList<>());
     }
 
-    private void addAllPartialTransitions(Set<T> currentStates, Set<T> nextStates, StateGuardCondition<T> guard) {
-        PartialTransition<T> partialPart = new PartialTransition<>(currentStates, nextStates);
+    private void addAllPartialTransitions(Set<T> previousStates, Set<T> nextStates, StateGuardCondition<T> guard) {
+        PartialTransition<T> partialPart = new PartialTransition<>(previousStates, nextStates);
         for (Transition<T> transition : partialPart.expandToTransitions()){
             guards.computeIfAbsent(transition, key -> new ArrayList<>()).add(guard);
         }

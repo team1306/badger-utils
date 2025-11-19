@@ -27,14 +27,14 @@ public class Robot extends TimedRobot {
     
     public Robot(){
         Edges<RobotState> edges = new Edges<>();
-        edges.addTowardsEdge(RobotState.DISABLED, Set.of(RobotState.AUTONOMOUS, RobotState.TELEOP, RobotState.TEST), (state) -> System.out.println("Enabled to: " + state.nextState()));
-        edges.addFromAllEdge(RobotState.E_STOP, state -> System.out.println("E-Stopped"));
-        edges.addFromAllEdge(RobotState.A_STOP, state -> System.out.println("A-Stopped"));
-        edges.addFromAllEdge(RobotState.DISABLED, state -> System.out.println("Disabled from: " + state.currentState()));
+        edges.addEnteringEdge(RobotState.DISABLED, Set.of(RobotState.AUTONOMOUS, RobotState.TELEOP, RobotState.TEST), (state) -> System.out.println("Enabled to: " + state.nextState()));
+        edges.addLeavingAnyEdge(RobotState.E_STOP, state -> System.out.println("E-Stopped"));
+        edges.addLeavingAnyEdge(RobotState.A_STOP, state -> System.out.println("A-Stopped"));
+        edges.addLeavingAnyEdge(RobotState.DISABLED, state -> System.out.println("Disabled from: " + state.currentState()));
         
         Guards<RobotState> guards = new Guards<>();
-        guards.addTowardsAllGuard(RobotState.E_STOP, (state) -> false);
-        guards.addTransitionGuard(RobotState.A_STOP, RobotState.AUTONOMOUS, (state) -> false);
+        guards.addEnteringAnyGuard(RobotState.E_STOP, (state) -> false);
+        guards.addEnteringAndLeavingGuard(RobotState.A_STOP, RobotState.AUTONOMOUS, (state) -> false);
         
         stateMachine = new StateMachine<>(RobotState.DISABLED, edges, guards);
                 

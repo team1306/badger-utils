@@ -1,5 +1,7 @@
 package badgerutils.subsystem;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -10,21 +12,30 @@ public record PartialTransition<T extends Enum<T>>(Set<T> currentStates, Set<T> 
         currentStates = Set.copyOf(currentStates);
         nextStates = Set.copyOf(nextStates);
     }
-
-    public boolean matches(T currentState, T nextState) {
-        if (currentStates.isEmpty()) {
-            if (nextStates.isEmpty()) {
-                return true;
-            } else {
-                return nextStates.contains(currentState);
-            }
-        } else {
-            if (nextStates.isEmpty()) {
-                return currentStates.contains(currentState);
-            } else {
-                return currentStates.contains(currentState) && nextStates.contains(nextState);
+    
+    public List<Transition<T>> expandToTransitions(){
+        List<Transition<T>> transitions = new ArrayList<>();
+        
+        if(currentStates.isEmpty() && nextStates.isEmpty()){
+            transitions.add(new Transition<>(null, null));
+        }
+        else if(currentStates.isEmpty()){
+            for(T nextState : nextStates){
+                transitions.add(new Transition<>(null, nextState));
             }
         }
-
+        else if(nextStates.isEmpty()){
+            for(T currentState : currentStates){
+                transitions.add(new Transition<>(currentState, null));
+            }
+        }else{
+            for(T currentState : currentStates){
+                for(T nextState : nextStates){
+                    transitions.add(new Transition<>(currentState, nextState));
+                }
+            }
+        }
+        
+        return transitions;
     }
 }

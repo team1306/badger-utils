@@ -34,6 +34,7 @@ import java.util.function.Supplier;
  * clamped to {@code maxCorrectionSpeed}.
  *
  * @since 2025
+ * @see <a href="https://www.chiefdelphi.com/t/introducing-antitipping-lib/508284">https://www.chiefdelphi.com/t/introducing-antitipping-lib/508284</a>
  */
 public class AntiTipping {
     private final Supplier<Double> pitchSupplier;

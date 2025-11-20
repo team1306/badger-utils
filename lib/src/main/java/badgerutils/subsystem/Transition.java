@@ -2,8 +2,9 @@ package badgerutils.subsystem;
 
 
 /**
- * Represents a transition between two states.
+ * Represents a point between two states.
  *
+ * <p>Semantically, this means that a transition is in the middle of the state previous to it (the current state of the system), and the next state</p>
  * @param previousState the previous state of a system
  * @param nextState the next state of a system
  * @param <T> the enum type

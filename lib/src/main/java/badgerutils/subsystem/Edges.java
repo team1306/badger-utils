@@ -6,48 +6,121 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Contains a collection of all the specified {@link StateEdge}.
+ * <p>
+ *     Edges are functions that are executed when the system transitions to another state. 
+ *     They may do any operation other than modifying the system's state.
+ * <p>
+ *     Similar to {@code Guards}, there are 7 types of edges, each slightly different, with very different use cases. 
+ *     <ul>
+ *         <li>{@link #leavingAndEnteringAnyState(StateEdge) State to state}</li>
+ *         <li>{@link #leavingStatesAndEnteringStates(Set, Set, StateEdge) States to states}</li>
+ *         <li>{@link #leavingToAnyState(Enum, StateEdge) State to any}</li>
+ *         <li>{@link #enteringFromAnyState(Enum, StateEdge) Any to state}</li>
+ *         <li>{@link #leavingAndEnteringAnyState(StateEdge) Any to any}</li>
+ *         <li>{@link #leavingToState(Enum, Set, StateEdge) State to states}</li>
+ *         <li>{@link #enteringFromState(Set, Enum, StateEdge) States to state}</li>
+ *     </ul>
+ * @param <T> the enum type
+ */
 public class Edges<T extends Enum<T>> {
     private final Map<Transition<T>, List<StateEdge<T>>> edges = new HashMap<>();
 
+    /**
+     * Creates a new empty {@link Edges}
+     * @return a new {@code Edges}
+     * @param <I> the type needed for the {@code Edges}
+     */
     public static <I extends Enum<I>> Edges<I> empty() {
         return new Edges<>();
     }
 
-    public Edges<T> leavingStateAndEnteringState(T previousState, T nextState, StateEdge<T> stateEdge) {
-        addAllPartialTransitions(Set.of(previousState), Set.of(nextState), stateEdge);
+    /**
+     * Adds a 'state to state' transition: from one state to one other state
+     * @param previousState the previous state of the system
+     * @param nextState the next state of the system
+     * @param edge the function to execute when the specified transition occurs
+     * @return reference for method chaining
+     */
+    public Edges<T> leavingStateAndEnteringState(T previousState, T nextState, StateEdge<T> edge) {
+        addAllPartialTransitions(Set.of(previousState), Set.of(nextState), edge);
         return this;
     }
 
+    /**
+     * Adds a 'state to state' transition for every possible pairing of states: from some states to some other states
+     * @param previousStates the possible previous states of the system
+     * @param nextStates the possible next states of the system
+     * @param edge the function to execute when the specified transition occurs
+     * @return reference for method chaining
+     */
     public Edges<T> leavingStatesAndEnteringStates(Set<T> previousStates, Set<T> nextStates, StateEdge<T> edge){
         addAllPartialTransitions(previousStates, nextStates, edge);
         return this;
     }
-    
+
+    /**
+     * Adds a 'state to any state' transition: from one state to any other state
+     * @param previousState the previous state of the system
+     * @param edge the function to execute when the specified transition occurs
+     * @return reference for method chaining
+     */
     public Edges<T> leavingToAnyState(T previousState, StateEdge<T> edge){
         addAllPartialTransitions(Set.of(previousState), Set.of(), edge);
         return this;
     }
 
+    /**
+     * Adds a 'any state to state' transition: from any state to one other state
+     * @param nextState the next state of the system
+     * @param edge the function to execute when the specified transition occurs
+     * @return reference for method chaining
+     */
     public Edges<T> enteringFromAnyState(T nextState, StateEdge<T> edge){
         addAllPartialTransitions(Set.of(), Set.of(nextState), edge);
         return this;
     }
 
+    /**
+     * Adds a 'state to states' transition: from one state to one of the other states
+     * @param previousState the previous state of the system
+     * @param nextStates the possible next states of the system
+     * @param edge the function to execute when the specified transition occurs
+     * @return reference for method chaining
+     */
     public Edges<T> leavingToState(T previousState, Set<T> nextStates, StateEdge<T> edge){
         addAllPartialTransitions(Set.of(previousState), nextStates, edge);
         return this;
     }
 
+    /**
+     * Adds a 'states to state' transition: from one of the states to one other state
+     * @param previousStates the possible previous states of the system
+     * @param nextState the next state of the system
+     * @param edge the function to execute when the specified transition occurs
+     * @return reference for method chaining
+     */
     public Edges<T> enteringFromState(Set<T> previousStates, T nextState, StateEdge<T> edge){
         addAllPartialTransitions(previousStates, Set.of(nextState), edge);
         return this;
     }
-    
+
+    /**
+     * Adds a 'any to any' transition: from any state to any other state
+     * @param edge the function to execute when the specified transition occurs
+     * @return reference for method chaining
+     */
     public Edges<T> leavingAndEnteringAnyState(StateEdge<T> edge){    
         addAllPartialTransitions(Set.of(), Set.of(), edge);
         return this;
     }
 
+    /**
+     * Gets all matching edges for a specified transition
+     * @param transition the transition to use for matching edges
+     * @return the list of matching edges
+     */
     public List<StateEdge<T>> getEdges(Transition<T> transition) {
         ArrayList<StateEdge<T>> edges = new ArrayList<>();
         edges.addAll(getEdgeFromKey(transition));

@@ -7,5 +7,9 @@ package badgerutils.subsystem;
  */
 @FunctionalInterface
 public interface StateEdge<T extends Enum<T>> {
+    /**
+     * Executes a function that is run whenever the state changes. 
+     * @param transition the transition that the edge is being executed at
+     */
     void performTransition(Transition<T> transition);
 }

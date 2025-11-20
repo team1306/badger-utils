@@ -12,27 +12,31 @@ import java.util.Map;
 public class StatefulSubsystem<T extends Enum<T>> extends SubsystemBase {
 
     private final StateMachine<T> stateMachine;
-    
+
+    /**
+     * Constructs a new {@link StatefulSubsystem} using the provided {@link StateMachine}
+     * @param stateMachine the {@code StateMachine} to wrap this subsystem around
+     */
     public StatefulSubsystem(StateMachine<T> stateMachine) {
         this.stateMachine = stateMachine;
     }
 
     /**
-     * Wraps the {@link StateMachine#canChangeState(Enum)}
+     * Wraps {@link StateMachine#canChangeState(Enum)}
      */
     public boolean canChangeState(T toState) {
         return stateMachine.canChangeState(toState);
     }
 
     /**
-     * Wraps the {@link StateMachine#canChangeState(Enum)}
+     * Wraps {@link StateMachine#canChangeState(Enum)}
      */
     public boolean tryChangeState(T toState) {
         return stateMachine.tryChangeState(toState);
     }
 
     /**
-     * Wraps the {@link StateMachine#getCurrentState()}
+     * Wraps {@link StateMachine#getCurrentState()}
      */
     public T getCurrentState() {
         return stateMachine.getCurrentState();

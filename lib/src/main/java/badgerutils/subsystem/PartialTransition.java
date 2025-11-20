@@ -12,7 +12,11 @@ public record PartialTransition<T extends Enum<T>>(Set<T> previousStates, Set<T>
         previousStates = Set.copyOf(previousStates);
         nextStates = Set.copyOf(nextStates);
     }
-    
+
+    /**
+     * Creates a list of transitions from the possible states of the {@link PartialTransition}
+     * @return the created list of transitions
+     */
     public List<Transition<T>> expandToTransitions(){
         List<Transition<T>> transitions = new ArrayList<>();
         

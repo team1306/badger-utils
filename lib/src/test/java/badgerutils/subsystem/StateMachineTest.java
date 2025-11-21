@@ -24,10 +24,10 @@ public class StateMachineTest {
         enabledTo = null;
 
         Edges<RobotState> edges = new Edges<RobotState>()
-                .leavingToState(RobotState.DISABLED, Set.of(RobotState.AUTONOMOUS, RobotState.TELEOP, RobotState.TEST), (state) -> enabledTo = state.nextState())
-                .enteringFromAnyState(RobotState.E_STOP, state -> eStopped = true)
-                .enteringFromAnyState(RobotState.A_STOP, state -> aStopped = true)
-                .enteringFromAnyState(RobotState.DISABLED, state -> disabledFrom = state.previousState());
+                .stateToMultipleStates(RobotState.DISABLED, Set.of(RobotState.AUTONOMOUS, RobotState.TELEOP, RobotState.TEST), (state) -> enabledTo = state.nextState())
+                .anyToState(RobotState.E_STOP, state -> eStopped = true)
+                .anyToState(RobotState.A_STOP, state -> aStopped = true)
+                .anyToState(RobotState.DISABLED, state -> disabledFrom = state.previousState());
 
         Guards<RobotState> guards = new Guards<RobotState>()
                 .leavingToAnyState(RobotState.E_STOP, (state) -> false)

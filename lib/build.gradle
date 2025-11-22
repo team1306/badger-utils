@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id "com.diffplug.spotless" version "7.2.1"
     id("io.freefair.lombok") version "8.12.2.1"
     id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2025.+'
     id 'maven-publish'
@@ -11,6 +10,12 @@ group = 'team1306'
 
 repositories {
     mavenCentral()
+}
+
+if (project.hasProperty('releaseMode')) {
+    wpilibRepositories.addAllReleaseRepositories(project)
+} else {
+    wpilibRepositories.addAllDevelopmentRepositories(project)
 }
 
 dependencies {
@@ -27,7 +32,9 @@ dependencies {
 
     compileOnly 'com.google.auto.service:auto-service:1.0-rc5'
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc5'
-    
+
+    errorprone("com.google.errorprone:error_prone_core:2.37.0")
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -86,39 +93,3 @@ test {
 }
 
 apply plugin: 'groovy'
-spotless {
-    enforceCheck false
-
-    encoding 'UTF-8'
-    lineEndings 'UNIX'
-
-    java {
-        eclipse().configFile('eclipse-java-style.xml')
-        target 'src/**/*.java'
-        removeUnusedImports()
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-
-    groovy {
-        importOrder()
-        excludeJava()
-        greclipse()
-    }
-
-    groovyGradle {
-        greclipse()
-    }
-
-    json {
-        target '**/*.json'
-        simple().indentWithSpaces(2)
-    }
-
-    format 'misc', {
-        target '.gitignore'
-
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-}

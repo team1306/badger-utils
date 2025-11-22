@@ -1,4 +1,4 @@
-package badgerutils.subsystem;
+package badgerutils.statemachine;
 
 /**
  * Represents a function transitioning from one state to another

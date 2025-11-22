@@ -1,5 +1,8 @@
 package badgerutils.subsystem;
 
+import badgerutils.statemachine.Edges;
+import badgerutils.statemachine.Guards;
+import badgerutils.statemachine.StateMachine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

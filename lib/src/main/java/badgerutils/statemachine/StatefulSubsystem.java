@@ -1,8 +1,6 @@
-package badgerutils.subsystem;
+package badgerutils.statemachine;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import java.util.Map;
 
 /**
  * Wraps a {@link StateMachine} inside of a Subsystem for convenience

@@ -1,4 +1,4 @@
-package badgerutils.subsystem;
+package badgerutils.statemachine;
 
 import java.util.ArrayList;
 import java.util.HashMap;

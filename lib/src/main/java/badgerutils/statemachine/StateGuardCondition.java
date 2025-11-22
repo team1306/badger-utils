@@ -1,4 +1,4 @@
-package badgerutils.subsystem;
+package badgerutils.statemachine;
 
 /**
  * Represents a condition enabling or blocking the change between two states

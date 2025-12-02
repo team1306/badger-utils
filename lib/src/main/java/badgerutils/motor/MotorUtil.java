@@ -9,7 +9,8 @@ public class MotorUtil {
      * @param kP the PID's proportional gain
      * @param kI the PID's intergral gain
      * @param kD the PID's derivative gain
-     * @param kS the feedforward's static gain* @param kV the feedforward's velocity gain
+     * @param kS the feedforward's static gain
+     * @param kV the feedforward's velocity gain
      * @param kG the feedforward's gravity gain
      * @param kA the feedforward's acceleration gain
      * @return A Slot0Configs object which can be applied to the motor configurator.

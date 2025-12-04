@@ -14,13 +14,13 @@ import java.util.Set;
  * <p>
  *     Similar to {@code Edges}, there are 7 types of guards, each slightly different, with very different use cases.
  *     <ul>
- *         <li>{@link #leavingAndEnteringAnyState(StateGuardCondition) State to state}</li>
- *         <li>{@link #leavingStatesAndEnteringStates(Set, Set, StateGuardCondition) States to states}</li>
- *         <li>{@link #leavingToAnyState(Enum, StateGuardCondition) State to any}</li>
- *         <li>{@link #enteringFromAnyState(Enum, StateGuardCondition) Any to state}</li>
- *         <li>{@link #leavingAndEnteringAnyState(StateGuardCondition) Any to any}</li>
- *         <li>{@link #leavingToState(Enum, Set, StateGuardCondition) State to states}</li>
- *         <li>{@link #enteringFromState(Set, Enum, StateGuardCondition) States to state}</li>
+ *         <li>{@link #anyToAny(StateGuardCondition) State to state}</li>
+ *         <li>{@link #multipleStatesToMultipleStates(Set, Set, StateGuardCondition) States to states}</li>
+ *         <li>{@link #anyToState(Enum, StateGuardCondition) State to any}</li>
+ *         <li>{@link #stateToAny(Enum, StateGuardCondition) Any to state}</li>
+ *         <li>{@link #anyToAny(StateGuardCondition) Any to any}</li>
+ *         <li>{@link #stateToMultipleStates(Enum, Set, StateGuardCondition) State to states}</li>
+ *         <li>{@link #multipleStatesToState(Set, Enum, StateGuardCondition) States to state}</li>
  *     </ul>
  * @param <T> the enum type
  */
@@ -43,7 +43,7 @@ public class Guards <T extends Enum<T>> {
      * @param guard the function to check before the system transitions state
      * @return reference for method chaining
      */
-    public Guards<T> leavingStateAndEnteringState(T previousState, T nextState, StateGuardCondition<T> guard) {
+    public Guards<T> stateToState(T previousState, T nextState, StateGuardCondition<T> guard) {
         addAllPartialTransitions(Set.of(previousState), Set.of(nextState), guard);
         return this;
     }
@@ -55,7 +55,7 @@ public class Guards <T extends Enum<T>> {
      * @param guard the function to check before the system transitions state
      * @return reference for method chaining
      */
-    public Guards<T> leavingStatesAndEnteringStates(Set<T> previousStates, Set<T> nextStates, StateGuardCondition<T> guard){
+    public Guards<T> multipleStatesToMultipleStates(Set<T> previousStates, Set<T> nextStates, StateGuardCondition<T> guard){
         addAllPartialTransitions(previousStates, nextStates, guard);
         return this;
     }
@@ -66,7 +66,7 @@ public class Guards <T extends Enum<T>> {
      * @param guard the function to check before the system transitions state
      * @return reference for method chaining
      */
-    public Guards <T> leavingToAnyState(T previousState, StateGuardCondition<T> guard){
+    public Guards <T> anyToState(T previousState, StateGuardCondition<T> guard){
         addAllPartialTransitions(Set.of(previousState), Set.of(), guard);
         return this;
     }
@@ -77,7 +77,7 @@ public class Guards <T extends Enum<T>> {
      * @param guard the function to check before the system transitions state
      * @return reference for method chaining
      */
-    public Guards <T> enteringFromAnyState(T nextState, StateGuardCondition<T> guard){
+    public Guards <T> stateToAny(T nextState, StateGuardCondition<T> guard){
         addAllPartialTransitions(Set.of(), Set.of(nextState), guard);
         return this;
     }
@@ -89,7 +89,7 @@ public class Guards <T extends Enum<T>> {
      * @param guard the function to check before the system transitions state
      * @return reference for method chaining
      */
-    public Guards <T> leavingToState(T previousState, Set<T> nextStates, StateGuardCondition<T> guard){
+    public Guards <T> stateToMultipleStates(T previousState, Set<T> nextStates, StateGuardCondition<T> guard){
         addAllPartialTransitions(Set.of(previousState), nextStates, guard);
         return this;
     }
@@ -101,7 +101,7 @@ public class Guards <T extends Enum<T>> {
      * @param guard the function to check before the system transitions state
      * @return reference for method chaining
      */
-    public Guards <T> enteringFromState(Set<T> previousStates, T nextState, StateGuardCondition<T> guard){
+    public Guards <T> multipleStatesToState(Set<T> previousStates, T nextState, StateGuardCondition<T> guard){
         addAllPartialTransitions(previousStates, Set.of(nextState), guard);
         return this;
     }
@@ -111,7 +111,7 @@ public class Guards <T extends Enum<T>> {
      * @param guard the function to check before the system transitions state
      * @return reference for method chaining
      */
-    public Guards <T> leavingAndEnteringAnyState(StateGuardCondition<T> guard){
+    public Guards <T> anyToAny(StateGuardCondition<T> guard){
         addAllPartialTransitions(Set.of(), Set.of(), guard);
         return this;
     }

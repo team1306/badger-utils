@@ -7,7 +7,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 public class MotorUtil {
     /** Creates a Slot0Configs object with the desired PID and feedforward gains for a motor.
      * @param kP the PID's proportional gain
-     * @param kI the PID's intergral gain
+     * @param kI the PID's integral gain
      * @param kD the PID's derivative gain
      * @param kS the feedforward's static gain
      * @param kV the feedforward's velocity gain

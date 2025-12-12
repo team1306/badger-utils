@@ -5,7 +5,7 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-public class MotorConfigBuilders {
+public class MotorConfigUtils {
     /** Creates a Slot0Configs object with the desired PID and feedforward gains for a motor.
      * @param kP the PID's proportional gain
      * @param kI the PID's integral gain
@@ -16,7 +16,7 @@ public class MotorConfigBuilders {
      * @param kA the feedforward's acceleration gain
      * @return A Slot0Configs object which can be applied to the motor configurator.
      */
-    public static Slot0Configs pidConfigBuilder(double kP, double kI, double kD, double kS, double kV, double kG, double kA, GravityTypeValue gravityType) {
+    public static Slot0Configs createPidConfig(double kP, double kI, double kD, double kS, double kV, double kG, double kA, GravityTypeValue gravityType) {
         Slot0Configs config = new Slot0Configs();
         config.kP = kP;
         config.kI = kI;
@@ -35,7 +35,7 @@ public class MotorConfigBuilders {
      * @param idleMode how the motor behaves when no voltage is applied. Options are Brake or Coast.
      * @return A MotorOutputConfigs object which can be applied to the motor configurator.
      */
-    public static MotorOutputConfigs motorOutputConfigBuilder(InvertedValue inverted, NeutralModeValue idleMode) {
+    public static MotorOutputConfigs createMotorOutputConfig(InvertedValue inverted, NeutralModeValue idleMode) {
         MotorOutputConfigs config = new MotorOutputConfigs();
         config.Inverted = inverted;
         config.NeutralMode = idleMode;
@@ -48,7 +48,7 @@ public class MotorConfigBuilders {
      * @param supplyCurrentLimit the maximum current (amps) that can be drawn from the battery
      * @return A CurrentLimitsConfigs object which can be applied to the motor configurator.
      */
-    public static CurrentLimitsConfigs currentLimitsConfigBuilder(double statorCurrentLimit, double supplyCurrentLimit) {
+    public static CurrentLimitsConfigs createCurrentLimitsConfig(double statorCurrentLimit, double supplyCurrentLimit) {
         CurrentLimitsConfigs config = new CurrentLimitsConfigs();
         config.StatorCurrentLimit = statorCurrentLimit;
         config.SupplyCurrentLimit = supplyCurrentLimit;
@@ -58,10 +58,23 @@ public class MotorConfigBuilders {
     /**
      * Creates a MotionMagicConfigs object with the desired constraints.
      * @param maxVelocity The maximum velocity of the system (units/s)
+     * @param maxAcceleration The maximum Acceleration of the system (units/s^2)
+     * @param maxJerk The maximum Jerk of the system (units/s^3)
+     * @return A MotionMagicConfigs object which can be applied to the motor configurator.
+     */
+    public static MotionMagicConfigs createMotionMagicConfig(double maxVelocity, double maxAcceleration, double maxJerk) {
+        MotionMagicConfigs config = createMotionMagicConfig(maxVelocity, maxAcceleration);
+        config.MotionMagicJerk = maxJerk;
+        return config;
+    }
+
+    /**
+     * Creates a MotionMagicConfigs object with the desired constraints.
+     * @param maxVelocity The maximum velocity of the system (units/s)
      * @param maxAcceleration The maximum Acceleration of the system (units/s/s)
      * @return A MotionMagicConfigs object which can be applied to the motor configurator.
      */
-    public static MotionMagicConfigs motionMagicConfigBuilder(double maxVelocity, double maxAcceleration) {
+    public static MotionMagicConfigs createMotionMagicConfig(double maxVelocity, double maxAcceleration) {
         MotionMagicConfigs config = new MotionMagicConfigs();
         config.MotionMagicCruiseVelocity = maxVelocity;
         config.MotionMagicAcceleration = maxAcceleration;

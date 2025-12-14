@@ -33,8 +33,8 @@ public class StateMachineTest {
                 .anyToState(RobotState.DISABLED, state -> disabledFrom = state.previousState());
 
         Guards<RobotState> guards = new Guards<RobotState>()
-                .leavingToAnyState(RobotState.E_STOP, (state) -> false)
-                .leavingStateAndEnteringState(RobotState.A_STOP, RobotState.AUTONOMOUS, (state) -> false);
+                .anyToState(RobotState.E_STOP, (state) -> false)
+                .stateToState(RobotState.A_STOP, RobotState.AUTONOMOUS, (state) -> false);
 
         stateMachine = new StateMachine<>(RobotState.DISABLED, edges, guards);
     }

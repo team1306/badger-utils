@@ -10,6 +10,9 @@ group = 'team1306'
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://maven.ctr-electronics.com/release/"
+    }
 }
 
 if (project.hasProperty('releaseMode')) {
@@ -27,6 +30,8 @@ dependencies {
     compileOnly 'edu.wpi.first.wpilibj:wpilibj-java:2025.+'
     compileOnly 'edu.wpi.first.wpiutil:wpiutil-java:2025.+'
     compileOnly 'edu.wpi.first.hal:hal-java:2025.+'
+
+    implementation "com.ctre.phoenix6:wpiapi-java:25.4.0"
 
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
 

@@ -7,7 +7,7 @@ public class ExampleWrist {
     THIS CLASS IS ONLY FOR AN EXAMPLE USAGE OF GUARDS INSIDE OF EXAMPLE ARM
      */
 
-    public Rotation2d getCurrentRotation() {
-        return Rotation2d.fromDegrees(90);
+    public ExampleWristStates getCurrentState() {
+        return ExampleWristStates.VERTICAL;
     }
 }

@@ -13,6 +13,9 @@ repositories {
     maven {
         url "https://maven.ctr-electronics.com/release/"
     }
+    maven {
+        url "https://frcmaven.wpi.edu/artifactory/littletonrobotics-mvn-release/"
+    }
 }
 
 if (project.hasProperty('releaseMode')) {
@@ -39,6 +42,8 @@ dependencies {
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc5'
 
     errorprone("com.google.errorprone:error_prone_core:2.37.0")
+    
+    implementation "org.littletonrobotics.akit:akit-java:26.0.0"
 
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'

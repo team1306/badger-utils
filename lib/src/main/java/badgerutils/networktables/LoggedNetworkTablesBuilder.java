@@ -22,7 +22,7 @@ public final class LoggedNetworkTablesBuilder {
      *
      * @return a Trigger with a toggle based on a boolean NetworkTables entry
      */
-    public Trigger createLoggedButton(String key, EventLoop eventLoop){
+    public static Trigger createLoggedButton(String key, EventLoop eventLoop){
         LoggedNetworkBoolean loggedNetworkBoolean = new LoggedNetworkBoolean(key, false);
         
         return new Trigger(eventLoop, loggedNetworkBoolean);
@@ -33,7 +33,7 @@ public final class LoggedNetworkTablesBuilder {
      *
      * @see #createLoggedButton(String, EventLoop)
      */
-    public Trigger createLoggedButton(String key){
+    public static Trigger createLoggedButton(String key){
         return createLoggedButton(key, CommandScheduler.getInstance().getDefaultButtonLoop());
     }
 
@@ -42,7 +42,7 @@ public final class LoggedNetworkTablesBuilder {
      *
      * @see #createLoggedButton(String, EventLoop)
      */
-    public Trigger createLoggedAutoResettingButton(String key, EventLoop eventLoop){
+    public static Trigger createLoggedAutoResettingButton(String key, EventLoop eventLoop){
         LoggedNetworkBoolean loggedNetworkBoolean = new LoggedNetworkBoolean(key, false);
 
         return new Trigger(eventLoop, loggedNetworkBoolean).onTrue(Commands.waitSeconds(0.25)
@@ -54,7 +54,7 @@ public final class LoggedNetworkTablesBuilder {
      *
      * @see #createLoggedAutoResettingButton(String, EventLoop)
      */
-    public Trigger createLoggedAutoResettingButton(String key){
+    public static Trigger createLoggedAutoResettingButton(String key){
         return createLoggedAutoResettingButton(key, CommandScheduler.getInstance().getDefaultButtonLoop());
     }
 

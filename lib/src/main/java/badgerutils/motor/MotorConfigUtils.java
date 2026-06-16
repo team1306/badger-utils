@@ -5,6 +5,8 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.units.measure.AngularVelocity;
+
 public class MotorConfigUtils {
     /** Creates a Slot0Configs object with the desired PID and feedforward gains for a motor.
      * @param kP the PID's proportional gain
@@ -16,7 +18,7 @@ public class MotorConfigUtils {
      * @param kA the feedforward's acceleration gain
      * @return A Slot0Configs object which can be applied to the motor configurator.
      */
-    public static Slot0Configs createPidConfig(double kP, double kI, double kD, double kS, double kV, double kG, double kA, GravityTypeValue gravityType) {
+    public static Slot0Configs createSlot0Config(double kP, double kI, double kD, double kS, double kV, double kG, double kA, GravityTypeValue gravityType) {
         Slot0Configs config = new Slot0Configs();
         config.kP = kP;
         config.kI = kI;
@@ -66,6 +68,9 @@ public class MotorConfigUtils {
         MotionMagicConfigs config = createMotionMagicConfig(maxVelocity, maxAcceleration);
         config.MotionMagicJerk = maxJerk;
         return config;
+
+
+
     }
 
     /**

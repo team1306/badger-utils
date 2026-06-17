@@ -5,7 +5,7 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import edu.wpi.first.units.measure.AngularVelocity;
+import static edu.wpi.first.units.Units.Amps;
 
 public class MotorConfigUtils {
     /** Creates a Slot0Configs object with the desired PID and feedforward gains for a motor.
@@ -50,7 +50,7 @@ public class MotorConfigUtils {
      * @param supplyCurrentLimit the maximum current (amps) that can be drawn from the battery
      * @return A CurrentLimitsConfigs object which can be applied to the motor configurator.
      */
-    public static CurrentLimitsConfigs createCurrentLimitsConfig(double statorCurrentLimit, double supplyCurrentLimit) {
+    public static CurrentLimitsConfigs createCurrentLimitsConfig(Amps statorCurrentLimit, double supplyCurrentLimit) {
         CurrentLimitsConfigs config = new CurrentLimitsConfigs();
         config.StatorCurrentLimit = statorCurrentLimit;
         config.SupplyCurrentLimit = supplyCurrentLimit;
@@ -68,9 +68,6 @@ public class MotorConfigUtils {
         MotionMagicConfigs config = createMotionMagicConfig(maxVelocity, maxAcceleration);
         config.MotionMagicJerk = maxJerk;
         return config;
-
-
-
     }
 
     /**

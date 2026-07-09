@@ -1,4 +1,4 @@
-package badgerutils.advantagekit;
+package badgerutils.advantagekit.talonfx;
 
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Celsius;

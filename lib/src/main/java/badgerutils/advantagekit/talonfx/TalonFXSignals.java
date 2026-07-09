@@ -1,4 +1,4 @@
-package badgerutils.advantagekit;
+package badgerutils.advantagekit.talonfx;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusCode;

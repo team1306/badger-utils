@@ -65,5 +65,6 @@ public record LoggedCANCoder(
   }
 
   // The struct for this record, used for serialization and deserialization.
-  public static final Struct<LoggedCANCoder> struct = StructGenerator.genRecord(LoggedCANCoder.class);
+  public static final Struct<LoggedCANCoder> struct =
+      StructGenerator.genRecord(LoggedCANCoder.class);
 }

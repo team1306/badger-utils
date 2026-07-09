@@ -7,6 +7,7 @@ public interface TestIO {
   public static class TestIOInputs {
     public LoggedTalonFX leftMotor;
     public LoggedTalonFX rightMotor;
+    public LoggedCANCoder encoder;
   }
 
   public default void updateInputs(TestIOInputs inputs) {}

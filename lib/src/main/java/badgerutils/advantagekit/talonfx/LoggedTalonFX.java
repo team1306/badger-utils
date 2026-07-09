@@ -36,8 +36,8 @@ public record LoggedTalonFX(
     /** the stator current of the motor (Amps) */
     double statorCurrent,
     /** the applied voltage of the motor (Volts) */
-    double voltage
-) implements StructSerializable {
+    double voltage)
+    implements StructSerializable {
 
   public LoggedTalonFX(
       int id,
@@ -58,12 +58,12 @@ public record LoggedTalonFX(
         temp.in(Celsius),
         supplyCurrent.in(Amps),
         statorCurrent.in(Amps),
-        voltage.in(Volts)
-    );
+        voltage.in(Volts));
   }
 
   /**
    * Returns the velocity of the motor.
+   *
    * @return the velocity of the motor.
    */
   public AngularVelocity getVelocity() {
@@ -72,6 +72,7 @@ public record LoggedTalonFX(
 
   /**
    * Returns the position of the motor.
+   *
    * @return the position of the motor.
    */
   public Angle getPosition() {
@@ -80,6 +81,7 @@ public record LoggedTalonFX(
 
   /**
    * Returns the acceleration of the motor.
+   *
    * @return the acceleration of the motor.
    */
   public AngularAcceleration getAcceleration() {
@@ -88,6 +90,7 @@ public record LoggedTalonFX(
 
   /**
    * Returns the temperature of the motor.
+   *
    * @return the temperature of the motor.
    */
   public Temperature getTemp() {
@@ -96,6 +99,7 @@ public record LoggedTalonFX(
 
   /**
    * Returns the supply current used by the motor.
+   *
    * @return the supply current used by the motor.
    */
   public Current getSupplyCurrent() {
@@ -104,6 +108,7 @@ public record LoggedTalonFX(
 
   /**
    * Returns the stator current used by the motor.
+   *
    * @return the stator current used by the motor.
    */
   public Current getStatorCurrent() {
@@ -112,6 +117,7 @@ public record LoggedTalonFX(
 
   /**
    * Returns the applied voltage of the motor.
+   *
    * @return the applied voltage of the motor.
    */
   public Voltage getVoltage() {

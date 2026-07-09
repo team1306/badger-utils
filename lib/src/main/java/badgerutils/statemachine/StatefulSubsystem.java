@@ -9,34 +9,29 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class StatefulSubsystem<T extends Enum<T>> extends SubsystemBase {
 
-    private final StateMachine<T> stateMachine;
+  private final StateMachine<T> stateMachine;
 
-    /**
-     * Constructs a new {@link StatefulSubsystem} using the provided {@link StateMachine}
-     * @param stateMachine the {@code StateMachine} to wrap this subsystem around
-     */
-    public StatefulSubsystem(StateMachine<T> stateMachine) {
-        this.stateMachine = stateMachine;
-    }
+  /**
+   * Constructs a new {@link StatefulSubsystem} using the provided {@link StateMachine}
+   *
+   * @param stateMachine the {@code StateMachine} to wrap this subsystem around
+   */
+  public StatefulSubsystem(StateMachine<T> stateMachine) {
+    this.stateMachine = stateMachine;
+  }
 
-    /**
-     * Wraps {@link StateMachine#canChangeState(Enum)}
-     */
-    public boolean canChangeState(T toState) {
-        return stateMachine.canChangeState(toState);
-    }
+  /** Wraps {@link StateMachine#canChangeState(Enum)} */
+  public boolean canChangeState(T toState) {
+    return stateMachine.canChangeState(toState);
+  }
 
-    /**
-     * Wraps {@link StateMachine#canChangeState(Enum)}
-     */
-    public boolean tryChangeState(T toState) {
-        return stateMachine.tryChangeState(toState);
-    }
+  /** Wraps {@link StateMachine#canChangeState(Enum)} */
+  public boolean tryChangeState(T toState) {
+    return stateMachine.tryChangeState(toState);
+  }
 
-    /**
-     * Wraps {@link StateMachine#getCurrentState()}
-     */
-    public T getCurrentState() {
-        return stateMachine.getCurrentState();
-    }
+  /** Wraps {@link StateMachine#getCurrentState()} */
+  public T getCurrentState() {
+    return stateMachine.getCurrentState();
+  }
 }

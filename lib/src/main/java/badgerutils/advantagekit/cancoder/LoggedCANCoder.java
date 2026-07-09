@@ -5,9 +5,6 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.util.struct.Struct;
-import edu.wpi.first.util.struct.StructGenerator;
-import edu.wpi.first.util.struct.StructSerializable;
 
 /** A record that contains all of the fields that should be logged from a CANcoder */
 public record LoggedCANCoder(
@@ -20,8 +17,7 @@ public record LoggedCANCoder(
     /** the position of the encoder (Rotations) */
     double position,
     /** the absolute position of the encoder (Rotations) */
-    double absolutePosition)
-    implements StructSerializable {
+    double absolutePosition) {
 
   public LoggedCANCoder(
       int id,
@@ -63,7 +59,4 @@ public record LoggedCANCoder(
   public Angle getAbsolutePosition() {
     return Rotations.of(absolutePosition);
   }
-
-  // The struct for this record, used for serialization and deserialization.
-  public static final Struct<LoggedCANCoder> struct = StructGenerator.genRecord(LoggedCANCoder.class);
 }

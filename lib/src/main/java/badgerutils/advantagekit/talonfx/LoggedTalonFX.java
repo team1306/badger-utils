@@ -37,7 +37,7 @@ public record LoggedTalonFX(
     double statorCurrent,
     /** the applied voltage of the motor (Volts) */
     double voltage
-) implements StructSerializable {
+) {
 
   public LoggedTalonFX(
       int id,
@@ -117,7 +117,4 @@ public record LoggedTalonFX(
   public Voltage getVoltage() {
     return Volts.of(voltage);
   }
-
-  // The struct for this record, used for serialization and deserialization.
-  public static final Struct<LoggedTalonFX> struct = StructGenerator.genRecord(LoggedTalonFX.class);
 }

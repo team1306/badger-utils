@@ -15,6 +15,7 @@ import edu.wpi.first.units.measure.Velocity;
 public class MotorConfigUtils {
   /**
    * Creates a Slot0Configs object with the desired PID and feedforward gains for a motor.
+   * This is the simple version of the method. It does not include the integral gain, acceleration gain, or the slot number.
    *
    * @param kP the PID's proportional gain
    * @param kD the PID's derivative gain
@@ -23,7 +24,7 @@ public class MotorConfigUtils {
    * @param kG the feedforward's gravity gain
    * @return A Slot0Configs object which can be applied to the motor configurator.
    */
-  public static Slot0Configs createSlot0Config(
+  public static Slot0Configs createSlotConfig(
       double kP, double kD, double kS, double kV, double kG, GravityTypeValue gravityType) {
     return new Slot0Configs()
         .withKP(kP)
@@ -32,6 +33,33 @@ public class MotorConfigUtils {
         .withKV(kV)
         .withKG(kG)
         .withGravityType(gravityType);
+  }
+
+  /**
+   * Creates a SlotConfigs object with the desired PID and feedforward gains for a motor.
+   * 
+   * @param kP the PID's proportional gain
+   * @param kI the PID's integral gain
+   * @param kD the PID's derivative gain
+   * @param kS the feedforward's static gain
+   * @param kV the feedforward's velocity gain
+   * @param kG the feedforward's gravity gain
+   * @param kA the feedforward's acceleration gain
+   * @return A SlotConfigs object which can be applied to the motor configurator.
+   */
+  public static SlotConfigs createSlotConfig(int slot,
+      double kP, double kI, double kD, double kS, double kV, double kG, double kA, GravityTypeValue gravityType) {
+    final SlotConfigs config = new SlotConfigs()
+        .withKP(kP)
+        .withKI(kI)
+        .withKD(kD)
+        .withKS(kS)
+        .withKV(kV)
+        .withKG(kG)
+        .withKA(kA)
+        .withGravityType(gravityType);
+    config.SlotNumber = slot;
+    return config;
   }
 
   /**

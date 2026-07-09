@@ -1,6 +1,7 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2026.1.1"
+    id "edu.wpi.first.GradleRIO" version "2026.2.1"
+    id "com.peterabeles.gversion" version "1.10"
 }
 
 java {
@@ -41,6 +42,17 @@ deploy {
     }
 }
 
+// Create version file
+project.compileJava.dependsOn(createVersionFile)
+gversion {
+    srcDir       = "src/main/java/"
+    classPackage = "frc.robot"
+    className    = "BuildConstants"
+    dateFormat   = "yyyy-MM-dd HH:mm:ss z"
+    timeZone     = "America/New_York"
+    indent       = "  "
+}
+
 def deployArtifact = deploy.targets.roborio.artifacts.frcJava
 
 // Set to true to use debug for all targets including JNI, which will drastically impact
@@ -75,6 +87,9 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     implementation project(":badgerutils")
+    
+    def akitJson = new groovy.json.JsonSlurper().parseText(new File(projectDir.getAbsolutePath() + "/vendordeps/AdvantageKit.json").text)
+    annotationProcessor "org.littletonrobotics.akit:akit-autolog:$akitJson.version"
 }
 
 test {
@@ -96,6 +111,12 @@ jar {
     from('build.gradle') { into 'backup' }
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+// Configuration for AdvantageKit
+task(replayWatch, type: JavaExec) {
+    mainClass = "org.littletonrobotics.junction.ReplayWatch"
+    classpath = sourceSets.main.runtimeClasspath
 }
 
 // Configure jar and deploy tasks

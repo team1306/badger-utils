@@ -1,6 +1,7 @@
-package badgerutils.advantagekit;
+package frc.robot.subsystems.testsubsystem;
 
 import org.littletonrobotics.junction.AutoLog;
+import badgerutils.advantagekit.talonfx.LoggedTalonFX;
 
 public interface TestIO {
   @AutoLog

@@ -20,6 +20,10 @@ public class LocationUtilsTest {
     Rotation2d result = LocationUtils.getDirectionToLocation(start, end);
 
     assertEquals(result.getDegrees(), 45, DELTA);
+
+    end = new Translation2d(1, 3);
+    result = LocationUtils.getDirectionToLocation(start, end);
+    assertEquals(result.getDegrees(), 90, DELTA);
   }
 
   @Test

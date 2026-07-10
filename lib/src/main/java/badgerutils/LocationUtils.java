@@ -39,7 +39,7 @@ public class LocationUtils {
    *
    * @param position1 the first point
    * @param position2 the second point
-   * @return A distance containing the distance between the two points
+   * @return A distance containing the distance between the two points assuming one unit is one meter.
    */
   public static Distance getDistanceToLocation(Translation2d position1, Translation2d position2) {
     return Meters.of(position1.getDistance(position2));

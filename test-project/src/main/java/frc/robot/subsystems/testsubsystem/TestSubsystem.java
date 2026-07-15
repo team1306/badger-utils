@@ -1,8 +1,7 @@
 package frc.robot.subsystems.testsubsystem;
 
-import org.littletonrobotics.junction.Logger;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.junction.Logger;
 
 public class TestSubsystem extends SubsystemBase {
   private final TestIO io;

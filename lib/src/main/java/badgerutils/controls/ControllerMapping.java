@@ -3,15 +3,14 @@ package badgerutils.controls;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
-/**
- * An abstract class that can be extedned to define custom controller mappings.
- */
+/** An abstract class that can be extedned to define custom controller mappings. */
 public abstract class ControllerMapping {
   protected CommandXboxController driverController;
   protected CommandXboxController operatorController;
 
   /**
    * Creates a new ControllerMapping object.
+   *
    * @param driverController The driver controller.
    * @param operatorController The operator controller.
    */
@@ -21,14 +20,12 @@ public abstract class ControllerMapping {
     this.operatorController = operatorController;
   }
 
-  /**
-   * Bind the controller buttons to commands.
-   */
+  /** Bind the controller buttons to commands. */
   public abstract void bind();
 
   /**
-   * Clears all button bindings from the controller mapping.
-   * Also override this method to remove and cancel any default commands.
+   * Clears all button bindings from the controller mapping. Also override this method to remove and
+   * cancel any default commands.
    */
   public void clear() {
     CommandScheduler.getInstance().getActiveButtonLoop().clear();

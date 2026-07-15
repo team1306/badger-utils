@@ -1,12 +1,11 @@
 package frc.robot.subsystems.testsubsystem;
 
-import com.ctre.phoenix6.configs.SlotConfigs;
-import com.ctre.phoenix6.hardware.CANcoder;
-import com.ctre.phoenix6.hardware.TalonFX;
-
 import badgerutils.advantagekit.PIDTunable;
 import badgerutils.advantagekit.cancoder.CANCoderSignals;
 import badgerutils.advantagekit.talonfx.TalonFXSignals;
+import com.ctre.phoenix6.configs.SlotConfigs;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
 
 public class TestIOReal implements TestIO {
   private final TalonFX leftMotor;
@@ -31,7 +30,9 @@ public class TestIOReal implements TestIO {
     rightMotorSignals = new TalonFXSignals(rightMotor);
     encoderSignals = new CANCoderSignals(encoder);
 
-    pidTunable = new PIDTunable("Test", SlotConfigs.from(TestConstants.CW_CONFIG.Slot0), leftMotor, rightMotor);    
+    pidTunable =
+        new PIDTunable(
+            "Test", SlotConfigs.from(TestConstants.CW_CONFIG.Slot0), leftMotor, rightMotor);
   }
 
   @Override

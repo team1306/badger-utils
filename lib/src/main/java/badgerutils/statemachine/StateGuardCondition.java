@@ -7,10 +7,11 @@ package badgerutils.statemachine;
  */
 @FunctionalInterface
 public interface StateGuardCondition<T extends Enum<T>> {
-    /**
-     * Checks whether the transition is valid and can change to {@code nextState} in the transition
-     * @param transition the transition that the guard is being executed at 
-     * @return whether the state can switch to the {@code nextState} of the transition
-     */
-    boolean canChange(Transition<T> transition);
+  /**
+   * Checks whether the transition is valid and can change to {@code nextState} in the transition
+   *
+   * @param transition the transition that the guard is being executed at
+   * @return whether the state can switch to the {@code nextState} of the transition
+   */
+  boolean canChange(Transition<T> transition);
 }

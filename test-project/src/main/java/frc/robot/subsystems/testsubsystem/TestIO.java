@@ -1,9 +1,8 @@
 package frc.robot.subsystems.testsubsystem;
 
-import org.littletonrobotics.junction.AutoLog;
-
 import badgerutils.advantagekit.cancoder.LoggedCANCoder;
 import badgerutils.advantagekit.talonfx.LoggedTalonFX;
+import org.littletonrobotics.junction.AutoLog;
 
 public interface TestIO {
   @AutoLog

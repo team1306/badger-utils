@@ -55,6 +55,7 @@ dependencies {
     testImplementation 'edu.wpi.first.wpilibj:wpilibj-java:2026.+'
     testImplementation 'edu.wpi.first.wpiutil:wpiutil-java:2026.+'
 
+    testImplementation 'us.hebi.quickbuf:quickbuf-runtime:1.4'
 }
 
 test {

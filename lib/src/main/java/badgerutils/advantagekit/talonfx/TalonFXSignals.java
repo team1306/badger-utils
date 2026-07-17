@@ -12,7 +12,8 @@ import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 
 /**
- * A class that stores all of the desired signals from a TalonFX motor. This class is used to create a LoggedTalonFX object, which can be serialized and logged.
+ * A class that stores all of the desired signals from a TalonFX motor. This class is used to create
+ * a LoggedTalonFX object, which can be serialized and logged.
  */
 public class TalonFXSignals {
   private final TalonFX motor;
@@ -26,7 +27,9 @@ public class TalonFXSignals {
   private final StatusSignal<Voltage> voltage;
 
   /**
-   * Creates a new LoggedTalonFXSignals object that will store all of the desired signals from the given TalonFX motor.
+   * Creates a new LoggedTalonFXSignals object that will store all of the desired signals from the
+   * given TalonFX motor.
+   *
    * @param motor the TalonFX motor from which to read signals
    */
   public TalonFXSignals(TalonFX motor) {
@@ -43,6 +46,7 @@ public class TalonFXSignals {
 
   /**
    * Refreshes all of the signals from the motor and checks if the motor is connected.
+   *
    * @return true if the motor is connected, false otherwise
    */
   public boolean refreshAndCheckConnection() {
@@ -54,7 +58,9 @@ public class TalonFXSignals {
   }
 
   /**
-   * Creates a new LoggedTalonFX object that contains all of the current values of the signals from the motor.
+   * Creates a new LoggedTalonFX object that contains all of the current values of the signals from
+   * the motor.
+   *
    * @return the created LoggedTalonFX object
    */
   public LoggedTalonFX createLoggedTalonFX() {

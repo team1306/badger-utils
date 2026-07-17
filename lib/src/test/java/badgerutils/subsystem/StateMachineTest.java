@@ -1,107 +1,108 @@
 package badgerutils.subsystem;
 
-import badgerutils.statemachine.Edges;
-import badgerutils.statemachine.Guards;
-import badgerutils.statemachine.StateMachine;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import badgerutils.statemachine.Edges;
+import badgerutils.statemachine.Guards;
+import badgerutils.statemachine.StateMachine;
+import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 public class StateMachineTest {
-    private StateMachine<RobotState> stateMachine;
+  private StateMachine<RobotState> stateMachine;
 
-    private boolean eStopped, aStopped;
-    private RobotState disabledFrom, enabledTo;
-    
-    
-    @BeforeEach
-    void setup(){
-        eStopped = false;
-        aStopped = false;
-        disabledFrom = null;
-        enabledTo = null;
+  private boolean eStopped, aStopped;
+  private RobotState disabledFrom, enabledTo;
 
-        Edges<RobotState> edges = new Edges<RobotState>()
-                .stateToMultipleStates(RobotState.DISABLED, Set.of(RobotState.AUTONOMOUS, RobotState.TELEOP, RobotState.TEST), (state) -> enabledTo = state.nextState())
-                .anyToState(RobotState.E_STOP, state -> eStopped = true)
-                .anyToState(RobotState.A_STOP, state -> aStopped = true)
-                .anyToState(RobotState.DISABLED, state -> disabledFrom = state.previousState());
+  @BeforeEach
+  void setup() {
+    eStopped = false;
+    aStopped = false;
+    disabledFrom = null;
+    enabledTo = null;
 
-        Guards<RobotState> guards = new Guards<RobotState>()
-                .anyToState(RobotState.E_STOP, (state) -> false)
-                .stateToState(RobotState.A_STOP, RobotState.AUTONOMOUS, (state) -> false);
+    Edges<RobotState> edges =
+        new Edges<RobotState>()
+            .stateToMultipleStates(
+                RobotState.DISABLED,
+                Set.of(RobotState.AUTONOMOUS, RobotState.TELEOP, RobotState.TEST),
+                (state) -> enabledTo = state.nextState())
+            .anyToState(RobotState.E_STOP, state -> eStopped = true)
+            .anyToState(RobotState.A_STOP, state -> aStopped = true)
+            .anyToState(RobotState.DISABLED, state -> disabledFrom = state.previousState());
 
-        stateMachine = new StateMachine<>(RobotState.DISABLED, edges, guards);
-    }
+    Guards<RobotState> guards =
+        new Guards<RobotState>()
+            .anyToState(RobotState.E_STOP, (state) -> false)
+            .stateToState(RobotState.A_STOP, RobotState.AUTONOMOUS, (state) -> false);
 
-    @Test
-    void eStoppedEdge(){
-        assertEquals(RobotState.DISABLED, stateMachine.getCurrentState());
+    stateMachine = new StateMachine<>(RobotState.DISABLED, edges, guards);
+  }
 
-        stateMachine.tryChangeState(RobotState.E_STOP);
-        assertTrue(eStopped);
-    }
+  @Test
+  void eStoppedEdge() {
+    assertEquals(RobotState.DISABLED, stateMachine.getCurrentState());
 
-    @Test
-    void aStoppedEdge(){
-        assertEquals(RobotState.DISABLED, stateMachine.getCurrentState());
+    stateMachine.tryChangeState(RobotState.E_STOP);
+    assertTrue(eStopped);
+  }
 
-        stateMachine.tryChangeState(RobotState.A_STOP);
-        assertTrue(aStopped);
-    }
+  @Test
+  void aStoppedEdge() {
+    assertEquals(RobotState.DISABLED, stateMachine.getCurrentState());
 
-    @Test
-    void disabledFromEdge(){
-        assertEquals(RobotState.DISABLED, stateMachine.getCurrentState());
-        stateMachine.setStateWithoutGuardsOrEdges(RobotState.AUTONOMOUS);
+    stateMachine.tryChangeState(RobotState.A_STOP);
+    assertTrue(aStopped);
+  }
 
-        stateMachine.tryChangeState(RobotState.DISABLED);
+  @Test
+  void disabledFromEdge() {
+    assertEquals(RobotState.DISABLED, stateMachine.getCurrentState());
+    stateMachine.setStateWithoutGuardsOrEdges(RobotState.AUTONOMOUS);
 
-        assertEquals(RobotState.AUTONOMOUS, disabledFrom);
-    }
+    stateMachine.tryChangeState(RobotState.DISABLED);
 
-    @Test
-    void enabledToEdge(){
-        assertEquals(RobotState.DISABLED, stateMachine.getCurrentState());
+    assertEquals(RobotState.AUTONOMOUS, disabledFrom);
+  }
 
-        stateMachine.tryChangeState(RobotState.TEST);
-        assertEquals(RobotState.TEST, enabledTo);
-    }
+  @Test
+  void enabledToEdge() {
+    assertEquals(RobotState.DISABLED, stateMachine.getCurrentState());
 
-    @Test
-    void eStopGuardTest(){
-        assertEquals(RobotState.DISABLED, stateMachine.getCurrentState());
+    stateMachine.tryChangeState(RobotState.TEST);
+    assertEquals(RobotState.TEST, enabledTo);
+  }
 
-        assertTrue(stateMachine.tryChangeState(RobotState.E_STOP));
-        assertEquals(RobotState.E_STOP, stateMachine.getCurrentState());
+  @Test
+  void eStopGuardTest() {
+    assertEquals(RobotState.DISABLED, stateMachine.getCurrentState());
 
-        assertFalse(stateMachine.tryChangeState(RobotState.AUTONOMOUS));
-        assertFalse(stateMachine.tryChangeState(RobotState.TEST));
+    assertTrue(stateMachine.tryChangeState(RobotState.E_STOP));
+    assertEquals(RobotState.E_STOP, stateMachine.getCurrentState());
 
-        assertEquals(RobotState.E_STOP, stateMachine.getCurrentState());
-    }
+    assertFalse(stateMachine.tryChangeState(RobotState.AUTONOMOUS));
+    assertFalse(stateMachine.tryChangeState(RobotState.TEST));
 
-    @Test
-    void aStopGuardTest(){
-        assertEquals(RobotState.DISABLED, stateMachine.getCurrentState());
+    assertEquals(RobotState.E_STOP, stateMachine.getCurrentState());
+  }
 
-        assertTrue(stateMachine.tryChangeState(RobotState.A_STOP));
-        assertEquals(RobotState.A_STOP, stateMachine.getCurrentState());
+  @Test
+  void aStopGuardTest() {
+    assertEquals(RobotState.DISABLED, stateMachine.getCurrentState());
 
-        assertFalse(stateMachine.tryChangeState(RobotState.AUTONOMOUS));
-        assertEquals(RobotState.A_STOP, stateMachine.getCurrentState());
+    assertTrue(stateMachine.tryChangeState(RobotState.A_STOP));
+    assertEquals(RobotState.A_STOP, stateMachine.getCurrentState());
 
-        assertTrue(stateMachine.tryChangeState(RobotState.TEST));
-        assertEquals(RobotState.TEST, stateMachine.getCurrentState());
-    }
+    assertFalse(stateMachine.tryChangeState(RobotState.AUTONOMOUS));
+    assertEquals(RobotState.A_STOP, stateMachine.getCurrentState());
 
-    @Test
-    void normalGuardTest(){
+    assertTrue(stateMachine.tryChangeState(RobotState.TEST));
+    assertEquals(RobotState.TEST, stateMachine.getCurrentState());
+  }
 
-    }
+  @Test
+  void normalGuardTest() {}
 }

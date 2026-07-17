@@ -6,7 +6,8 @@ import java.util.function.DoubleConsumer;
 import org.littletonrobotics.junction.networktables.LoggedNetworkNumber;
 
 /**
- * A class that extends LoggedNetworkNumber and allows for subscribers to be notified when the value changes.
+ * A class that extends LoggedNetworkNumber and allows for subscribers to be notified when the value
+ * changes.
  */
 public class LoggedNetworkNumberPlus extends LoggedNetworkNumber {
   private double lastValue = get();

@@ -4,8 +4,11 @@ import badgerutils.advantagekit.PIDTunable;
 import badgerutils.advantagekit.cancoder.CANCoderSignals;
 import badgerutils.advantagekit.talonfx.TalonFXSignals;
 import com.ctre.phoenix6.configs.SlotConfigs;
+import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 
 public class TestIOReal implements TestIO {
   private final TalonFX leftMotor;
@@ -17,6 +20,8 @@ public class TestIOReal implements TestIO {
   private final CANCoderSignals encoderSignals;
 
   private final PIDTunable pidTunable;
+
+  private final DutyCycleOut dutyCycleRequest;
 
   public TestIOReal() {
     leftMotor = new TalonFX(0);
@@ -33,6 +38,8 @@ public class TestIOReal implements TestIO {
     pidTunable =
         new PIDTunable(
             "Test", SlotConfigs.from(TestConstants.CW_CONFIG.Slot0), leftMotor, rightMotor);
+
+    dutyCycleRequest = new DutyCycleOut(0).withEnableFOC(true);
   }
 
   @Override
@@ -40,5 +47,20 @@ public class TestIOReal implements TestIO {
     inputs.leftMotor = leftMotorSignals.createLoggedTalonFX();
     inputs.rightMotor = rightMotorSignals.createLoggedTalonFX();
     inputs.encoder = encoderSignals.createLoggedCANCoder();
+  }
+
+  @Override
+  public void setDutyCycle(double dutyCycle) {
+    dutyCycleRequest.Output = dutyCycle;
+    leftMotor.setControl(dutyCycleRequest);
+    rightMotor.setControl(dutyCycleRequest);
+
+    Follower follower = new Follower(leftMotor.getDeviceID(), MotorAlignmentValue.Aligned);
+    rightMotor.setControl(follower);
+
+    if (!leftMotor.isConnected()) {
+      rightMotor.setControl(dutyCycleRequest);
+      leftMotor.setControl(follower);
+    }
   }
 }

@@ -13,6 +13,25 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Velocity;
 
 public class MotorConfigUtils {
+
+  /**
+   * Reverses the motor direction by changing MotorOutput.Inverted while maintaining all of the
+   * other configs
+   *
+   * @param configToInvert the original config to copy
+   * @return a copy of the original configuration with the opposite inverted value
+   */
+  public static TalonFXConfiguration createInvertedConfig(TalonFXConfiguration configToInvert) {
+    return configToInvert
+        .clone()
+        .withMotorOutput(
+            createMotorOutputConfig(
+                configToInvert.MotorOutput.Inverted == InvertedValue.Clockwise_Positive
+                    ? InvertedValue.CounterClockwise_Positive
+                    : InvertedValue.Clockwise_Positive,
+                configToInvert.MotorOutput.NeutralMode));
+  }
+
   /**
    * Creates a Slot0Configs object with the desired PID and feedforward gains for a motor. This is
    * the simple version of the method. It does not include the integral gain, acceleration gain, or

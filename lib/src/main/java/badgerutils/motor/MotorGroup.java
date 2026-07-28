@@ -26,6 +26,7 @@ public class MotorGroup {
 
     this.motors = motors;
     this.followRequest = new Follower(motors[0].getDeviceID(), MotorAlignmentValue.Aligned);
+    this.leader = motors[0];
 
     Trigger leaderDisconnected = new Trigger(() -> !leader.isConnected());
 

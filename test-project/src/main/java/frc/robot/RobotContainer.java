@@ -21,6 +21,8 @@ public class RobotContainer {
         testSubsystem = new TestSubsystem(new TestIO() {});
         break;
     }
+
+    testSubsystem.setDefaultCommand(testSubsystem.runDutyCycleCommand(1));
   }
 
   public Command getAutonomousCommand() {

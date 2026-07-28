@@ -3,12 +3,11 @@ package frc.robot.subsystems.testsubsystem;
 import badgerutils.advantagekit.PIDTunable;
 import badgerutils.advantagekit.cancoder.CANCoderSignals;
 import badgerutils.advantagekit.talonfx.TalonFXSignals;
+import badgerutils.motor.MotorGroup;
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.MotorAlignmentValue;
 
 public class TestIOReal implements TestIO {
   private final TalonFX leftMotor;
@@ -21,12 +20,16 @@ public class TestIOReal implements TestIO {
 
   private final PIDTunable pidTunable;
 
+  private final MotorGroup motorGroup;
+
   private final DutyCycleOut dutyCycleRequest;
 
   public TestIOReal() {
     leftMotor = new TalonFX(0);
     rightMotor = new TalonFX(1);
     encoder = new CANcoder(2);
+
+    motorGroup = new MotorGroup(leftMotor, rightMotor);
 
     leftMotor.getConfigurator().apply(TestConstants.CW_CONFIG);
     rightMotor.getConfigurator().apply(TestConstants.CW_CONFIG);
@@ -51,16 +54,6 @@ public class TestIOReal implements TestIO {
 
   @Override
   public void setDutyCycle(double dutyCycle) {
-    dutyCycleRequest.Output = dutyCycle;
-    leftMotor.setControl(dutyCycleRequest);
-    rightMotor.setControl(dutyCycleRequest);
-
-    Follower follower = new Follower(leftMotor.getDeviceID(), MotorAlignmentValue.Aligned);
-    rightMotor.setControl(follower);
-
-    if (!leftMotor.isConnected()) {
-      rightMotor.setControl(dutyCycleRequest);
-      leftMotor.setControl(follower);
-    }
+    motorGroup.setControl(dutyCycleRequest.withOutput(dutyCycle));
   }
 }

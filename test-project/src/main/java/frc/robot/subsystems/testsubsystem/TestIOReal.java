@@ -3,7 +3,9 @@ package frc.robot.subsystems.testsubsystem;
 import badgerutils.advantagekit.PIDTunable;
 import badgerutils.advantagekit.cancoder.CANCoderSignals;
 import badgerutils.advantagekit.talonfx.TalonFXSignals;
+import badgerutils.motor.MotorGroup;
 import com.ctre.phoenix6.configs.SlotConfigs;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -18,10 +20,16 @@ public class TestIOReal implements TestIO {
 
   private final PIDTunable pidTunable;
 
+  private final MotorGroup motorGroup;
+
+  private final DutyCycleOut dutyCycleRequest;
+
   public TestIOReal() {
     leftMotor = new TalonFX(0);
     rightMotor = new TalonFX(1);
     encoder = new CANcoder(2);
+
+    motorGroup = new MotorGroup(leftMotor, rightMotor);
 
     leftMotor.getConfigurator().apply(TestConstants.CW_CONFIG);
     rightMotor.getConfigurator().apply(TestConstants.CW_CONFIG);
@@ -33,6 +41,8 @@ public class TestIOReal implements TestIO {
     pidTunable =
         new PIDTunable(
             "Test", SlotConfigs.from(TestConstants.CW_CONFIG.Slot0), leftMotor, rightMotor);
+
+    dutyCycleRequest = new DutyCycleOut(0).withEnableFOC(true);
   }
 
   @Override
@@ -40,5 +50,10 @@ public class TestIOReal implements TestIO {
     inputs.leftMotor = leftMotorSignals.createLoggedTalonFX();
     inputs.rightMotor = rightMotorSignals.createLoggedTalonFX();
     inputs.encoder = encoderSignals.createLoggedCANCoder();
+  }
+
+  @Override
+  public void setDutyCycle(double dutyCycle) {
+    motorGroup.setControl(dutyCycleRequest.withOutput(dutyCycle));
   }
 }

@@ -25,6 +25,8 @@ public class TalonFXSignals {
   private final StatusSignal<Current> supplyCurrent;
   private final StatusSignal<Current> statorCurrent;
   private final StatusSignal<Voltage> voltage;
+  private final StatusSignal<Double> closedLoopError;
+  private final StatusSignal<Double> closedLoopTarget;
 
   /**
    * Creates a new LoggedTalonFXSignals object that will store all of the desired signals from the
@@ -42,6 +44,8 @@ public class TalonFXSignals {
     supplyCurrent = motor.getSupplyCurrent();
     statorCurrent = motor.getStatorCurrent();
     voltage = motor.getMotorVoltage();
+    closedLoopError = motor.getClosedLoopError();
+    closedLoopTarget = motor.getClosedLoopReference();
   }
 
   /**
@@ -52,7 +56,15 @@ public class TalonFXSignals {
   public boolean refreshAndCheckConnection() {
     StatusCode status =
         BaseStatusSignal.refreshAll(
-            velocity, position, acceleration, temperature, supplyCurrent, statorCurrent, voltage);
+            velocity,
+            position,
+            acceleration,
+            temperature,
+            supplyCurrent,
+            statorCurrent,
+            voltage,
+            closedLoopError,
+            closedLoopTarget);
 
     return status.isOK();
   }
@@ -75,6 +87,9 @@ public class TalonFXSignals {
         temperature.getValue(),
         supplyCurrent.getValue(),
         statorCurrent.getValue(),
-        voltage.getValue());
+        voltage.getValue(),
+        closedLoopError.getValue(),
+        closedLoopTarget.getValue(),
+        motor.getAppliedControl());
   }
 }

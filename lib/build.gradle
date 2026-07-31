@@ -35,7 +35,7 @@ dependencies {
     compileOnly 'edu.wpi.first.wpiutil:wpiutil-java:2026.+'
     compileOnly 'edu.wpi.first.hal:hal-java:2026.+'
 
-    compileOnly "com.ctre.phoenix6:wpiapi-java:26.1.0"
+    compileOnly "com.ctre.phoenix6:wpiapi-java:26.3.0"
 
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
 

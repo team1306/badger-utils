@@ -7,6 +7,7 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
 import static edu.wpi.first.units.Units.Volts;
 
+import com.ctre.phoenix6.controls.ControlRequest;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -33,7 +34,13 @@ public record LoggedTalonFX(
     /** the stator current of the motor (Amps) */
     double statorCurrent,
     /** the applied voltage of the motor (Volts) */
-    double voltage) {
+    double voltage,
+    /** the closed loop error of the motor (Whatever the PID unit is) */
+    double closedLoopError,
+    /** the closed loop target of the motor (Whatever the PID unit is) */
+    double closedLoopTarget,
+    /** the info about the current control request */
+    String controlInfo) {
 
   public LoggedTalonFX(
       int id,
@@ -44,7 +51,10 @@ public record LoggedTalonFX(
       Temperature temp,
       Current supplyCurrent,
       Current statorCurrent,
-      Voltage voltage) {
+      Voltage voltage,
+      double closedLoopError,
+      double closedLoopTarget,
+      ControlRequest controlRequest) {
     this(
         id,
         isMotorConnected,
@@ -54,7 +64,10 @@ public record LoggedTalonFX(
         temp.in(Celsius),
         supplyCurrent.in(Amps),
         statorCurrent.in(Amps),
-        voltage.in(Volts));
+        voltage.in(Volts),
+        closedLoopError,
+        closedLoopTarget,
+        controlRequest.toString());
   }
 
   /**

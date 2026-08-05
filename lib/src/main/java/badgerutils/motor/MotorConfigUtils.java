@@ -7,7 +7,6 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
-
 import edu.wpi.first.units.AngularAccelerationUnit;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -49,7 +48,13 @@ public class MotorConfigUtils {
    * @return A Slot0Configs object which can be applied to the motor configurator.
    */
   public static Slot0Configs createSlotConfig(
-      double kP, double kD, double kS, double kV, double kG, GravityTypeValue gravityType, StaticFeedforwardSignValue staticFeedForwardSign) {
+      double kP,
+      double kD,
+      double kS,
+      double kV,
+      double kG,
+      GravityTypeValue gravityType,
+      StaticFeedforwardSignValue staticFeedForwardSign) {
     return new Slot0Configs()
         .withKP(kP)
         .withKD(kD)

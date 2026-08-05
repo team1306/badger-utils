@@ -68,7 +68,8 @@ public class PIDTunable {
             kVSupplier.get(),
             kGSupplier.get(),
             kASupplier.get(),
-            defaultConfig.GravityType);
+            defaultConfig.GravityType,
+            defaultConfig.StaticFeedforwardSign);
     config.SlotNumber = defaultConfig.SlotNumber;
 
     for (TalonFX motor : motors) {

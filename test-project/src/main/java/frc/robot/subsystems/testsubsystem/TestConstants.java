@@ -7,6 +7,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 
 public class TestConstants {
   public static final double KP = 0.1;
@@ -22,5 +23,11 @@ public class TestConstants {
           .withCurrentLimits(MotorConfigUtils.createCurrentLimitsConfig(Amps.of(60), Amps.of(40)))
           .withSlot0(
               MotorConfigUtils.createSlotConfig(
-                  KP, KD, KS, KV, 0, GravityTypeValue.Elevator_Static));
+                  KP,
+                  KD,
+                  KS,
+                  KV,
+                  0,
+                  GravityTypeValue.Elevator_Static,
+                  StaticFeedforwardSignValue.UseVelocitySign));
 }

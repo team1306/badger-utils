@@ -19,7 +19,7 @@ repositories {
     }
 }
 
-if (project.hasProperty('releaseMode') && false) {
+if (project.hasProperty('releaseMode')) {
     wpilibRepositories.addAllReleaseRepositories(project)
 } else {
     wpilibRepositories.addAllDevelopmentRepositories(project)

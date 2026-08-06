@@ -33,12 +33,12 @@ def pheonix6Version = "26.50.0-alpha-1";
 dependencies {
     compileOnly "org.wpilib:commands3-java:$wpilibVersion"
 
-    compileOnly "edu.wpi.first.ntcore:ntcore-java:$wpilibVersion"
-    compileOnly "edu.wpi.first.wpiunits:wpiunits-java:$wpilibVersion"
-    compileOnly "edu.wpi.first.wpimath:wpimath-java:$wpilibVersion"
-    compileOnly "edu.wpi.first.wpilibj:wpilibj-java:$wpilibVersion"
-    compileOnly "edu.wpi.first.wpiutil:wpiutil-java:$wpilibVersion"
-    compileOnly "edu.wpi.first.hal:hal-java:$wpilibVersion"
+    compileOnly "org.wpilib.ntcore:ntcore-java:$wpilibVersion"
+    compileOnly "org.wpilib.wpiunits:wpiunits-java:$wpilibVersion"
+    compileOnly "org.wpilib.wpimath:wpimath-java:$wpilibVersion"
+    compileOnly "org.wpilib.wpilibj:wpilibj-java:$wpilibVersion"
+    compileOnly "org.wpilib.wpiutil:wpiutil-java:$wpilibVersion"
+    compileOnly "org.wpilib.hal:hal-java:$wpilibVersion"
 
     compileOnly "com.ctre.phoenix6:wpiapi-java:$pheonix6Version"
     compileOnly "org.littletonrobotics.akit:akit-java:$advantageKitVersion"
@@ -55,10 +55,10 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     testImplementation "org.wpilib:commands3-java:$wpilibVersion"
-    testImplementation "edu.wpi.first.wpiunits:wpiunits-java:$wpilibVersion"
-    testImplementation "edu.wpi.first.wpimath:wpimath-java:$wpilibVersion"
-    testImplementation "edu.wpi.first.wpilibj:wpilibj-java:$wpilibVersion"
-    testImplementation "edu.wpi.first.wpiutil:wpiutil-java:$wpilibVersion"
+    testImplementation "org.wpilib.wpiunits:wpiunits-java:$wpilibVersion"
+    testImplementation "org.wpilib.wpimath:wpimath-java:$wpilibVersion"
+    testImplementation "org.wpilib.wpilibj:wpilibj-java:$wpilibVersion"
+    testImplementation "org.wpilib.wpiutil:wpiutil-java:$wpilibVersion"
 
     testImplementation "com.ctre.phoenix6:wpiapi-java:$pheonix6Version"
     testImplementation "org.littletonrobotics.akit:akit-java:$advantageKitVersion"

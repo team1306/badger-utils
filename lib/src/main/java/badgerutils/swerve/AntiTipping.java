@@ -1,10 +1,10 @@
 package badgerutils.swerve;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import java.util.function.Supplier;
+
+import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.math.geometry.Translation2d;
+import org.wpilib.math.kinematics.ChassisVelocities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,12 +43,16 @@ public class AntiTipping {
   private final Supplier<Double> pitchSupplier;
   private final Supplier<Double> rollSupplier;
   private final double kP; // proportional gain
+
   /** -- SETTER -- Sets the tipping detection threshold in degrees. */
   @Setter private double tippingThresholdDegrees;
+
   /** -- SETTER -- Sets the maximum correction velocity in meters per second. */
   @Setter private double maxCorrectionSpeed; // m/s
+
   /** -- GETTER -- Returns the most recent pitch value in degrees. */
   @Getter private double pitch = 0.0;
+
   /** -- GETTER -- Returns the most recent roll value in degrees. */
   @Getter private double roll = 0.0;
 
@@ -57,12 +61,13 @@ public class AntiTipping {
   @Getter private double inclinationMagnitude = 0.0;
 
   @Getter private double yawDirectionDeg = 0.0;
+
   /** -- GETTER -- Returns if the robot is currently beyond the tipping threshold. */
   @Getter private boolean isTipping = false;
 
   @Getter private Rotation2d tiltDirection = new Rotation2d();
 
-  @Getter private ChassisSpeeds speeds = new ChassisSpeeds();
+  @Getter private ChassisVelocities speeds = new ChassisVelocities();
 
   /**
    * Creates a new {@code AntiTipping} instance.
@@ -110,13 +115,13 @@ public class AntiTipping {
 
     // Proportional correction
     correctionSpeed = kP * -inclinationMagnitude;
-    correctionSpeed = MathUtil.clamp(correctionSpeed, -maxCorrectionSpeed, maxCorrectionSpeed);
+    correctionSpeed = Math.clamp(correctionSpeed, -maxCorrectionSpeed, maxCorrectionSpeed);
 
     // Correction vector (field-relative)
     Translation2d correctionVector =
         new Translation2d(0, 1).rotateBy(tiltDirection).times(correctionSpeed);
 
     // WPILib convention: Y axis inverted
-    speeds = new ChassisSpeeds(correctionVector.getX(), -correctionVector.getY(), 0);
+    speeds = new ChassisVelocities(correctionVector.getX(), -correctionVector.getY(), 0);
   }
 }

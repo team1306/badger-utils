@@ -1,13 +1,13 @@
 package badgerutils.statemachine;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.command3.Mechanism;
 
 /**
  * Wraps a {@link StateMachine} inside of a Subsystem for convenience
  *
  * @param <T> the enum type of the state machine
  */
-public class StatefulSubsystem<T extends Enum<T>> extends SubsystemBase {
+public class StatefulSubsystem<T extends Enum<T>> extends Mechanism {
 
   private final StateMachine<T> stateMachine;
 

@@ -1,8 +1,8 @@
 package badgerutils.triggers;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.event.EventLoop;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import org.wpilib.command3.Trigger;
+import org.wpilib.driverstation.RobotState;
+import org.wpilib.event.EventLoop;
 
 public final class RobotTriggers {
   private RobotTriggers() {}
@@ -13,7 +13,7 @@ public final class RobotTriggers {
    * @return A trigger that is true when the robot is enabled in autonomous mode.
    */
   public static Trigger autonomous(EventLoop eventLoop) {
-    return new Trigger(eventLoop, DriverStation::isAutonomousEnabled);
+    return new Trigger(eventLoop, RobotState::isAutonomousEnabled);
   }
 
   /**
@@ -22,7 +22,7 @@ public final class RobotTriggers {
    * @return A trigger that is true when the robot is enabled in teleop mode.
    */
   public static Trigger teleop(EventLoop eventLoop) {
-    return new Trigger(eventLoop, DriverStation::isTeleopEnabled);
+    return new Trigger(eventLoop, RobotState::isTeleopEnabled);
   }
 
   /**
@@ -31,7 +31,7 @@ public final class RobotTriggers {
    * @return A trigger that is true when the robot is disabled.
    */
   public static Trigger disabled(EventLoop eventLoop) {
-    return new Trigger(eventLoop, DriverStation::isDisabled);
+    return new Trigger(eventLoop, RobotState::isDisabled);
   }
 
   /**
@@ -40,6 +40,6 @@ public final class RobotTriggers {
    * @return A trigger that is true when the robot is enabled in test mode.
    */
   public static Trigger test(EventLoop eventLoop) {
-    return new Trigger(eventLoop, DriverStation::isTestEnabled);
+    return new Trigger(eventLoop, RobotState::isTestEnabled);
   }
 }

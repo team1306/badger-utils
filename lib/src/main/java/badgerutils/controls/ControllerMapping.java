@@ -1,7 +1,7 @@
 package badgerutils.controls;
 
-import edu.wpi.first.wpilibj.event.EventLoop;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import org.wpilib.command3.button.CommandXboxController;
+import org.wpilib.event.EventLoop;
 
 /** An abstract class that can be extedned to define custom controller mappings. */
 public abstract class ControllerMapping {

@@ -1,12 +1,14 @@
 package badgerutils.triggers;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.event.EventLoop;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import org.wpilib.command3.Trigger;
+import org.wpilib.driverstation.Alliance;
+import org.wpilib.driverstation.MatchState;
+import org.wpilib.event.EventLoop;
 
 public final class AllianceTriggers {
 
   private AllianceTriggers() {}
+
   /**
    * Returns whether the Driverstation is on the red alliance
    *
@@ -14,8 +16,8 @@ public final class AllianceTriggers {
    *     present
    */
   public static boolean isRedAlliance() {
-    var alliance = DriverStation.getAlliance();
-    return alliance.isEmpty() || (alliance.get() == DriverStation.Alliance.Red);
+    var alliance = MatchState.getAlliance();
+    return alliance.isEmpty() || (alliance.get() == Alliance.RED);
   }
 
   /**

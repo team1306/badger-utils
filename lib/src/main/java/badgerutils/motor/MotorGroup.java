@@ -1,12 +1,12 @@
 package badgerutils.motor;
 
+import org.wpilib.command3.Trigger;
+
 import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
  * Manages a group of {@link TalonFX} motor controllers with dynamic leader failover capabilities. *

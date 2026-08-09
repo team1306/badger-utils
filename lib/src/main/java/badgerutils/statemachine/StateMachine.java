@@ -1,7 +1,5 @@
 package badgerutils.statemachine;
 
-import lombok.Getter;
-
 /**
  * Implements the advanced features possible with a state machine.
  *
@@ -18,7 +16,7 @@ public class StateMachine<T extends Enum<T>> {
   private final Edges<T> stateEdges;
   private final Guards<T> stateGuards;
 
-  @Getter private T currentState;
+  private T currentState;
 
   /**
    * Creates a new {@link StateMachine} object with the current state set to {@code initialState}
@@ -102,5 +100,9 @@ public class StateMachine<T extends Enum<T>> {
    */
   public void setStateWithoutGuardsOrEdges(T nextState) {
     currentState = nextState;
+  }
+
+  public T getCurrentState() {
+    return currentState;
   }
 }

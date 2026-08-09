@@ -1,8 +1,6 @@
 package badgerutils.swerve;
 
 import java.util.function.Supplier;
-import lombok.Getter;
-import lombok.Setter;
 import org.wpilib.math.geometry.Rotation2d;
 import org.wpilib.math.geometry.Translation2d;
 import org.wpilib.math.kinematics.ChassisVelocities;
@@ -42,31 +40,22 @@ public class AntiTipping {
   private final Supplier<Double> pitchSupplier;
   private final Supplier<Double> rollSupplier;
   private final double kP; // proportional gain
-
-  /** -- SETTER -- Sets the tipping detection threshold in degrees. */
-  @Setter private double tippingThresholdDegrees;
-
-  /** -- SETTER -- Sets the maximum correction velocity in meters per second. */
-  @Setter private double maxCorrectionSpeed; // m/s
-
-  /** -- GETTER -- Returns the most recent pitch value in degrees. */
-  @Getter private double pitch = 0.0;
-
-  /** -- GETTER -- Returns the most recent roll value in degrees. */
-  @Getter private double roll = 0.0;
+  private double tippingThresholdDegrees;
+  private double maxCorrectionSpeed; // m/s
+  private double pitch = 0.0;
+  private double roll = 0.0;
 
   private double correctionSpeed = 0.0;
 
-  @Getter private double inclinationMagnitude = 0.0;
+  private double inclinationMagnitude = 0.0;
 
-  @Getter private double yawDirectionDeg = 0.0;
+  private double yawDirectionDeg = 0.0;
 
-  /** -- GETTER -- Returns if the robot is currently beyond the tipping threshold. */
-  @Getter private boolean isTipping = false;
+  private boolean isTipping = false;
 
-  @Getter private Rotation2d tiltDirection = new Rotation2d();
+  private Rotation2d tiltDirection = new Rotation2d();
 
-  @Getter private ChassisVelocities speeds = new ChassisVelocities();
+  private ChassisVelocities speeds = new ChassisVelocities();
 
   /**
    * Creates a new {@code AntiTipping} instance.
@@ -122,5 +111,52 @@ public class AntiTipping {
 
     // WPILib convention: Y axis inverted
     speeds = new ChassisVelocities(correctionVector.getX(), -correctionVector.getY(), 0);
+  }
+
+  /** Sets the tipping detection threshold in degrees. */
+  public void setTippingThresholdDegrees(double tippingThresholdDegrees) {
+    this.tippingThresholdDegrees = tippingThresholdDegrees;
+  }
+
+  /** Sets the maximum correction velocity in meters per second. */
+  public void setMaxCorrectionSpeed(double maxCorrectionSpeed) {
+    this.maxCorrectionSpeed = maxCorrectionSpeed;
+  }
+
+  /**
+   * @return the most recent pitch value in degrees.
+   */
+  public double getPitch() {
+    return pitch;
+  }
+
+  /**
+   * @return the most recent roll value in degrees.
+   */
+  public double getRoll() {
+    return roll;
+  }
+
+  public double getInclinationMagnitude() {
+    return inclinationMagnitude;
+  }
+
+  public double getYawDirectionDeg() {
+    return yawDirectionDeg;
+  }
+
+  /**
+   * @return whether the robot is currently beyond the tipping threshold.
+   */
+  public boolean getIsTipping() {
+    return isTipping;
+  }
+
+  public Rotation2d getTiltDirection() {
+    return tiltDirection;
+  }
+
+  public ChassisVelocities getVelocities() {
+    return speeds;
   }
 }

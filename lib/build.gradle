@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id("io.freefair.lombok") version "8.12.2.1"
     id 'org.wpilib.WPILibRepositoriesPlugin' version '2027.0.0'
     id 'maven-publish'
     id("net.ltgt.errorprone") version "4.2.0"

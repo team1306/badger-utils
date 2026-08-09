@@ -1,9 +1,10 @@
 package badgerutils.commands;
 
-import badgerutils.statemachine.Mechanism;
 import java.util.Optional;
 import java.util.function.Consumer;
 import org.wpilib.command3.Command;
+import org.wpilib.command3.Mechanism;
+import org.wpilib.command3.Scheduler;
 
 public final class CommandUtils {
 
@@ -13,8 +14,8 @@ public final class CommandUtils {
     runIfNotNull(
         mechanism.getDefaultCommand(),
         (Command command) -> {
-          mechansim.removeDefaultCommand();
-          command.cancel();
+          mechanism.setDefaultCommand(null);
+          Scheduler.getDefault().cancel(command);
         });
   }
 

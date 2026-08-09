@@ -1,12 +1,11 @@
 package badgerutils.swerve;
 
 import java.util.function.Supplier;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.wpilib.math.geometry.Rotation2d;
 import org.wpilib.math.geometry.Translation2d;
 import org.wpilib.math.kinematics.ChassisVelocities;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * {@code AntiTipping} provides a proportional correction system to prevent the robot from tipping

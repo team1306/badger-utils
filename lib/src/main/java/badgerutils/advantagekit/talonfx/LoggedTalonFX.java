@@ -7,14 +7,13 @@ import static org.wpilib.units.Units.RotationsPerSecond;
 import static org.wpilib.units.Units.RotationsPerSecondPerSecond;
 import static org.wpilib.units.Units.Volts;
 
+import com.ctre.phoenix6.controls.ControlRequest;
 import org.wpilib.units.measure.Angle;
 import org.wpilib.units.measure.AngularAcceleration;
 import org.wpilib.units.measure.AngularVelocity;
 import org.wpilib.units.measure.Current;
 import org.wpilib.units.measure.Temperature;
 import org.wpilib.units.measure.Voltage;
-
-import com.ctre.phoenix6.controls.ControlRequest;
 
 /** A record that contains all of the fields that should be logged from a TalonFX motor */
 public record LoggedTalonFX(

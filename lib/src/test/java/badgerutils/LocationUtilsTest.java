@@ -1,7 +1,7 @@
 package badgerutils;
 
-import static org.wpilib.units.Units.Meters;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.wpilib.units.Units.Meters;
 
 import org.junit.jupiter.api.Test;
 import org.wpilib.math.geometry.Rotation2d;

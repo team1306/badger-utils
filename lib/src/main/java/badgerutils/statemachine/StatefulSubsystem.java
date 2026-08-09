@@ -7,7 +7,7 @@ import org.wpilib.command3.Mechanism;
  *
  * @param <T> the enum type of the state machine
  */
-public class StatefulSubsystem<T extends Enum<T>> extends Mechanism {
+public class StatefulSubsystem<T extends Enum<T>> implements Mechanism {
 
   private final StateMachine<T> stateMachine;
 

@@ -1,12 +1,11 @@
 package badgerutils.advantagekit.cancoder;
 
-import org.wpilib.units.measure.Angle;
-import org.wpilib.units.measure.AngularVelocity;
-
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.hardware.CANcoder;
+import org.wpilib.units.measure.Angle;
+import org.wpilib.units.measure.AngularVelocity;
 
 /**
  * A class that stores all of the desired signals from a CANcoder. This class is used to create a

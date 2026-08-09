@@ -1,5 +1,6 @@
 package badgerutils.triggers;
 
+import org.wpilib.command3.Scheduler;
 import org.wpilib.command3.Trigger;
 import org.wpilib.driverstation.Alliance;
 import org.wpilib.driverstation.MatchState;
@@ -37,7 +38,16 @@ public final class AllianceTriggers {
    * @return the trigger
    */
   public static Trigger redAlliance(EventLoop eventLoop) {
-    return new Trigger(eventLoop, AllianceTriggers::isRedAlliance);
+    return new Trigger(Scheduler.getDefault(), eventLoop, AllianceTriggers::isRedAlliance);
+  }
+
+  /**
+   * Returns a trigger, activating when the alliance is red. Uses the default event loop
+   *
+   * @return the trigger
+   */
+  public static Trigger redAlliance() {
+    return redAlliance(Scheduler.getDefault().getDefaultEventLoop());
   }
 
   /**
@@ -47,6 +57,15 @@ public final class AllianceTriggers {
    * @return the trigger
    */
   public static Trigger blueAlliance(EventLoop eventLoop) {
-    return new Trigger(eventLoop, AllianceTriggers::isBlueAlliance);
+    return new Trigger(Scheduler.getDefault(), eventLoop, AllianceTriggers::isBlueAlliance);
+  }
+
+  /**
+   * Returns a trigger, activating when the alliance is blue. Uses the default event loop
+   *
+   * @return the trigger
+   */
+  public static Trigger blueAlliance() {
+    return blueAlliance(Scheduler.getDefault().getDefaultEventLoop());
   }
 }

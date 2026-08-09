@@ -1,9 +1,10 @@
 package badgerutils.advantagekit.cancoder;
 
+import static org.wpilib.units.Units.Rotations;
+import static org.wpilib.units.Units.RotationsPerSecond;
+
 import org.wpilib.units.measure.Angle;
 import org.wpilib.units.measure.AngularVelocity;
-import static org.wpilib.units.Units.RotationsPerSecond;
-import static org.wpilib.units.Units.Rotations;
 
 /** A record that contains all of the fields that should be logged from a CANcoder */
 public record LoggedCANCoder(

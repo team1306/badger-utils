@@ -3,7 +3,6 @@ package badgerutils;
 import static org.wpilib.units.Units.Meters;
 
 import java.util.Arrays;
-
 import org.wpilib.math.geometry.Rotation2d;
 import org.wpilib.math.geometry.Translation2d;
 import org.wpilib.units.measure.Distance;

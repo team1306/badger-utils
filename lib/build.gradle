@@ -102,15 +102,12 @@ tasks.withType(JavaCompile) {
     options.compilerArgs << '-Xlint:processing'
 }
 
-tasks.withType(Javadoc) {
+tasks.withType(Javadoc).configureEach {
     options {
         docTitle = "Badger Utils Javadoc"
+        // Disables strict linting so missing third-party annotation paths don't crash Java 25
+        addStringOption('Xdoclint:none', '-quiet')
     }
-}
-
-
-javadoc {
-    exclude 'com.fasterxml.jackson.annotation.JsonAutoDetect'
 }
 
 test {
@@ -139,7 +136,7 @@ spotless {
             exclude "**/build/**", "**/build-*/**"
         }
         greclipse()
-        indentWithSpaces(4)
+        leadingTabsToSpaces(4)
         trimTrailingWhitespace()
         endWithNewline()
     }

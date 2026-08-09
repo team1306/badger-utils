@@ -18,7 +18,8 @@ public final class RobotTriggers {
   }
 
   /**
-   * Returns a trigger that is true when the robot is enabled in autonomous mode. Uses the default event loop
+   * Returns a trigger that is true when the robot is enabled in autonomous mode. Uses the default
+   * event loop
    *
    * @return A trigger that is true when the robot is enabled in autonomous mode.
    */
@@ -36,7 +37,8 @@ public final class RobotTriggers {
   }
 
   /**
-   * Returns a trigger that is true when the robot is enabled in teleop mode. Uses the default event loop
+   * Returns a trigger that is true when the robot is enabled in teleop mode. Uses the default event
+   * loop
    *
    * @return A trigger that is true when the robot is enabled in teleop mode.
    */

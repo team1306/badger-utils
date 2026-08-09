@@ -1,5 +1,3 @@
 package badgerutils.statemachine;
 
-public class Mechanism {
-
-}
+public class Mechanism {}

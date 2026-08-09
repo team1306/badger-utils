@@ -5,6 +5,9 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
+
+import badgerutils.commands.Commands;
+
 import org.wpilib.command3.Command;
 import org.wpilib.command3.Trigger;
 
@@ -41,7 +44,7 @@ public class MotorGroup {
     this.leader = this.motors[0];
 
     Command leaderChooser =
-        Command.noRequirements(coroutine -> chooseLeader()).named("MotorGroupWatcher");
+        Commands.createInstantCommand(() -> chooseLeader()).named("MotorGroupWatcher");
     for (TalonFX talonFX : this.motors) {
       Trigger disconnected = new Trigger(() -> !talonFX.isConnected());
       disconnected.onTrue(leaderChooser);

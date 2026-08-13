@@ -12,7 +12,6 @@ public class TestSubsystem extends Mechanism {
     this.io = io;
   }
 
-  @Override
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("Test", inputs);

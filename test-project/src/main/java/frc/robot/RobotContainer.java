@@ -4,6 +4,7 @@ import frc.robot.subsystems.testsubsystem.TestIO;
 import frc.robot.subsystems.testsubsystem.TestIOReal;
 import frc.robot.subsystems.testsubsystem.TestSubsystem;
 import org.wpilib.command3.Command;
+import org.wpilib.command3.Scheduler;
 
 public class RobotContainer {
   private final TestSubsystem testSubsystem;
@@ -22,6 +23,7 @@ public class RobotContainer {
     }
 
     testSubsystem.setDefaultCommand(testSubsystem.runDutyCycleCommand(1));
+    Scheduler.getDefault().addPeriodic(testSubsystem::periodic);
   }
 
   public Command getAutonomousCommand() {

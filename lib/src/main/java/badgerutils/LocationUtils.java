@@ -1,15 +1,16 @@
 package badgerutils;
 
-import static edu.wpi.first.units.Units.Meters;
+import static org.wpilib.units.Units.Meters;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.units.measure.Distance;
 import java.util.Arrays;
+import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.math.geometry.Translation2d;
+import org.wpilib.units.measure.Distance;
 
 public class LocationUtils {
   /**
-   * Returns the angle between two points
+   * Returns the angle between two points. If both points are the same, a Rotation2d representing
+   * zero degrees is returned
    *
    * @param startPosition the first point
    * @param endPosition the second point
@@ -19,7 +20,7 @@ public class LocationUtils {
   public static Rotation2d getDirectionToLocation(
       Translation2d startPosition, Translation2d endPosition) {
     Translation2d difference = endPosition.minus(startPosition);
-    return difference.getAngle();
+    return difference.getAngle().orElse(Rotation2d.kZero);
   }
 
   /**

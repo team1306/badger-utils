@@ -1,10 +1,9 @@
 plugins {
     id 'java'
-    id("io.freefair.lombok") version "8.12.2.1"
-    id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2025.+'
+    id 'org.wpilib.WPILibRepositoriesPlugin' version '2027.0.0'
     id 'maven-publish'
     id("net.ltgt.errorprone") version "4.2.0"
-    id "com.diffplug.spotless" version "6.12.0"
+    id "com.diffplug.spotless" version "8.9.0"
 }
 
 group = 'team1306'
@@ -24,18 +23,24 @@ if (project.hasProperty('releaseMode')) {
 } else {
     wpilibRepositories.addAllDevelopmentRepositories(project)
 }
+wpilibRepositories.use2027Repos()
+
+def wpilibVersion = "2027.+"
+def advantageKitVersion = "27.0.0-alpha-4"
+def pheonix6Version = "26.50.0-alpha-1";
 
 dependencies {
-    compileOnly 'edu.wpi.first.ntcore:ntcore-java:2026.+'
+    compileOnly "org.wpilib:commands3-java:$wpilibVersion"
 
-    compileOnly 'edu.wpi.first.wpilibNewCommands:wpilibNewCommands-java:2026.+'
-    compileOnly 'edu.wpi.first.wpiunits:wpiunits-java:2026.+'
-    compileOnly 'edu.wpi.first.wpimath:wpimath-java:2026.+'
-    compileOnly 'edu.wpi.first.wpilibj:wpilibj-java:2026.+'
-    compileOnly 'edu.wpi.first.wpiutil:wpiutil-java:2026.+'
-    compileOnly 'edu.wpi.first.hal:hal-java:2026.+'
+    compileOnly "org.wpilib.ntcore:ntcore-java:$wpilibVersion"
+    compileOnly "org.wpilib.wpiunits:wpiunits-java:$wpilibVersion"
+    compileOnly "org.wpilib.wpimath:wpimath-java:$wpilibVersion"
+    compileOnly "org.wpilib.wpilibj:wpilibj-java:$wpilibVersion"
+    compileOnly "org.wpilib.wpiutil:wpiutil-java:$wpilibVersion"
+    compileOnly "org.wpilib.hal:hal-java:$wpilibVersion"
 
-    compileOnly "com.ctre.phoenix6:wpiapi-java:26.3.0"
+    compileOnly "com.ctre.phoenix6:wpiapi-java:$pheonix6Version"
+    compileOnly "org.littletonrobotics.akit:akit-java:$advantageKitVersion"
 
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
 
@@ -44,17 +49,18 @@ dependencies {
 
     errorprone("com.google.errorprone:error_prone_core:2.37.0")
 
-    implementation "org.littletonrobotics.akit:akit-java:26.0.0"
-
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    testImplementation 'edu.wpi.first.wpilibNewCommands:wpilibNewCommands-java:2026.+'
-    testImplementation 'edu.wpi.first.wpiunits:wpiunits-java:2026.+'
-    testImplementation 'edu.wpi.first.wpimath:wpimath-java:2026.+'
-    testImplementation 'edu.wpi.first.wpilibj:wpilibj-java:2026.+'
-    testImplementation 'edu.wpi.first.wpiutil:wpiutil-java:2026.+'
+    testImplementation "org.wpilib:commands3-java:$wpilibVersion"
+    testImplementation "org.wpilib.wpiunits:wpiunits-java:$wpilibVersion"
+    testImplementation "org.wpilib.wpimath:wpimath-java:$wpilibVersion"
+    testImplementation "org.wpilib.wpilibj:wpilibj-java:$wpilibVersion"
+    testImplementation "org.wpilib.wpiutil:wpiutil-java:$wpilibVersion"
+
+    testImplementation "com.ctre.phoenix6:wpiapi-java:$pheonix6Version"
+    testImplementation "org.littletonrobotics.akit:akit-java:$advantageKitVersion"
 
     testImplementation 'us.hebi.quickbuf:quickbuf-runtime:1.4'
 }
@@ -79,7 +85,7 @@ java {
     withJavadocJar()
 
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
@@ -96,15 +102,12 @@ tasks.withType(JavaCompile) {
     options.compilerArgs << '-Xlint:processing'
 }
 
-tasks.withType(Javadoc) {
+tasks.withType(Javadoc).configureEach {
     options {
         docTitle = "Badger Utils Javadoc"
+        // Disables strict linting so missing third-party annotation paths don't crash Java 25
+        addStringOption('Xdoclint:none', '-quiet')
     }
-}
-
-
-javadoc {
-    exclude 'com.fasterxml.jackson.annotation.JsonAutoDetect'
 }
 
 test {
@@ -133,7 +136,7 @@ spotless {
             exclude "**/build/**", "**/build-*/**"
         }
         greclipse()
-        indentWithSpaces(4)
+        leadingTabsToSpaces(4)
         trimTrailingWhitespace()
         endWithNewline()
     }

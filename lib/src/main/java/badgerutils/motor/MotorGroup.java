@@ -5,8 +5,8 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import org.wpilib.command3.Command;
+import org.wpilib.command3.Trigger;
 
 /**
  * Manages a group of {@link TalonFX} motor controllers with dynamic leader failover capabilities. *
@@ -40,9 +40,12 @@ public class MotorGroup {
     this.followRequest = new Follower(this.motors[0].getDeviceID(), MotorAlignmentValue.Aligned);
     this.leader = this.motors[0];
 
+    Command leaderChooser =
+        Command.noRequirements(coroutine -> chooseLeader()).named("MotorGroupWatcher");
     for (TalonFX talonFX : this.motors) {
       Trigger disconnected = new Trigger(() -> !talonFX.isConnected());
-      disconnected.onChange(Commands.runOnce(() -> chooseLeader()));
+      disconnected.onTrue(leaderChooser);
+      disconnected.onFalse(leaderChooser);
     }
   }
 

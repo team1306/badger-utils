@@ -8,6 +8,7 @@ import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import frc.robot.Constants;
 
 public class TestIOReal implements TestIO {
   private final TalonFX leftMotor;
@@ -25,9 +26,9 @@ public class TestIOReal implements TestIO {
   private final DutyCycleOut dutyCycleRequest;
 
   public TestIOReal() {
-    leftMotor = new TalonFX(0);
-    rightMotor = new TalonFX(1);
-    encoder = new CANcoder(2);
+    leftMotor = new TalonFX(0, Constants.CAN_BUS);
+    rightMotor = new TalonFX(1, Constants.CAN_BUS);
+    encoder = new CANcoder(2, Constants.CAN_BUS);
 
     motorGroup = new MotorGroup(leftMotor, rightMotor);
 

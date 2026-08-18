@@ -1,20 +1,21 @@
 package badgerutils.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import java.util.Optional;
 import java.util.function.Consumer;
+import org.wpilib.command3.Command;
+import org.wpilib.command3.Mechanism;
+import org.wpilib.command3.Scheduler;
 
 public final class CommandUtils {
 
   private CommandUtils() {}
 
-  public static void removeAndCancelDefaultCommand(Subsystem subsystem) {
+  public static void removeAndCancelDefaultCommand(Mechanism mechanism) {
     runIfNotNull(
-        subsystem.getDefaultCommand(),
+        mechanism.getDefaultCommand(),
         (Command command) -> {
-          subsystem.removeDefaultCommand();
-          command.cancel();
+          mechanism.setDefaultCommand(null);
+          Scheduler.getDefault().cancel(command);
         });
   }
 

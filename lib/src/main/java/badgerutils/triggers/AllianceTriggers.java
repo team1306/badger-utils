@@ -1,12 +1,15 @@
 package badgerutils.triggers;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.event.EventLoop;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import org.wpilib.command3.Scheduler;
+import org.wpilib.command3.Trigger;
+import org.wpilib.driverstation.Alliance;
+import org.wpilib.driverstation.MatchState;
+import org.wpilib.event.EventLoop;
 
 public final class AllianceTriggers {
 
   private AllianceTriggers() {}
+
   /**
    * Returns whether the Driverstation is on the red alliance
    *
@@ -14,8 +17,8 @@ public final class AllianceTriggers {
    *     present
    */
   public static boolean isRedAlliance() {
-    var alliance = DriverStation.getAlliance();
-    return alliance.isEmpty() || (alliance.get() == DriverStation.Alliance.Red);
+    var alliance = MatchState.getAlliance();
+    return alliance.isEmpty() || (alliance.get() == Alliance.RED);
   }
 
   /**
@@ -35,7 +38,16 @@ public final class AllianceTriggers {
    * @return the trigger
    */
   public static Trigger redAlliance(EventLoop eventLoop) {
-    return new Trigger(eventLoop, AllianceTriggers::isRedAlliance);
+    return new Trigger(Scheduler.getDefault(), eventLoop, AllianceTriggers::isRedAlliance);
+  }
+
+  /**
+   * Returns a trigger, activating when the alliance is red. Uses the default event loop
+   *
+   * @return the trigger
+   */
+  public static Trigger redAlliance() {
+    return redAlliance(Scheduler.getDefault().getDefaultEventLoop());
   }
 
   /**
@@ -45,6 +57,15 @@ public final class AllianceTriggers {
    * @return the trigger
    */
   public static Trigger blueAlliance(EventLoop eventLoop) {
-    return new Trigger(eventLoop, AllianceTriggers::isBlueAlliance);
+    return new Trigger(Scheduler.getDefault(), eventLoop, AllianceTriggers::isBlueAlliance);
+  }
+
+  /**
+   * Returns a trigger, activating when the alliance is blue. Uses the default event loop
+   *
+   * @return the trigger
+   */
+  public static Trigger blueAlliance() {
+    return blueAlliance(Scheduler.getDefault().getDefaultEventLoop());
   }
 }

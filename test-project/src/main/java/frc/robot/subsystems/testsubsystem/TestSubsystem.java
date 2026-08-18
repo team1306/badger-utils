@@ -1,11 +1,10 @@
 package frc.robot.subsystems.testsubsystem;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.junction.Logger;
+import org.wpilib.command3.Command;
+import org.wpilib.command3.Mechanism;
 
-public class TestSubsystem extends SubsystemBase {
+public class TestSubsystem extends Mechanism {
   private final TestIO io;
   private final TestIOInputsAutoLogged inputs = new TestIOInputsAutoLogged();
 
@@ -13,7 +12,6 @@ public class TestSubsystem extends SubsystemBase {
     this.io = io;
   }
 
-  @Override
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("Test", inputs);
@@ -24,6 +22,14 @@ public class TestSubsystem extends SubsystemBase {
   }
 
   public Command runDutyCycleCommand(double dutyCycle) {
-    return Commands.startEnd(() -> setDutyCycle(dutyCycle), () -> setDutyCycle(0), this);
+    return run(coroutine -> {
+          setDutyCycle(dutyCycle);
+          coroutine.park();
+        })
+        .whenCanceled(
+            () -> {
+              setDutyCycle(0);
+            })
+        .named("RunDutyCycle");
   }
 }

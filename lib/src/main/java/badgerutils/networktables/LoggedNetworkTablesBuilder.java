@@ -1,13 +1,14 @@
 package badgerutils.networktables;
 
-import edu.wpi.first.wpilibj.event.EventLoop;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import static org.wpilib.units.Units.Seconds;
+
 import java.util.function.Consumer;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import org.littletonrobotics.junction.networktables.LoggedNetworkBoolean;
+import org.wpilib.command3.Command;
+import org.wpilib.command3.Scheduler;
+import org.wpilib.command3.Trigger;
+import org.wpilib.event.EventLoop;
 
 public final class LoggedNetworkTablesBuilder {
 
@@ -24,7 +25,7 @@ public final class LoggedNetworkTablesBuilder {
   public static Trigger createLoggedButton(String key, EventLoop eventLoop) {
     LoggedNetworkBoolean loggedNetworkBoolean = new LoggedNetworkBoolean(key, false);
 
-    return new Trigger(eventLoop, loggedNetworkBoolean);
+    return new Trigger(Scheduler.getDefault(), eventLoop, loggedNetworkBoolean);
   }
 
   /**
@@ -33,7 +34,7 @@ public final class LoggedNetworkTablesBuilder {
    * @see #createLoggedButton(String, EventLoop)
    */
   public static Trigger createLoggedButton(String key) {
-    return createLoggedButton(key, CommandScheduler.getInstance().getDefaultButtonLoop());
+    return createLoggedButton(key, Scheduler.getDefault().getDefaultEventLoop());
   }
 
   /**
@@ -45,12 +46,14 @@ public final class LoggedNetworkTablesBuilder {
   public static Trigger createLoggedAutoResettingButton(String key, EventLoop eventLoop) {
     LoggedNetworkBoolean loggedNetworkBoolean = new LoggedNetworkBoolean(key, false);
 
-    return new Trigger(eventLoop, loggedNetworkBoolean)
+    return new Trigger(Scheduler.getDefault(), eventLoop, loggedNetworkBoolean)
         .onTrue(
-            Commands.waitSeconds(0.25)
-                .andThen(
-                    new InstantCommand(() -> loggedNetworkBoolean.set(false))
-                        .ignoringDisable(true)));
+            Command.noRequirements(
+                    coroutine -> {
+                      coroutine.wait(Seconds.of(.25));
+                      loggedNetworkBoolean.set(false);
+                    })
+                .named("AutoResettingButton"));
   }
 
   /**
@@ -59,8 +62,7 @@ public final class LoggedNetworkTablesBuilder {
    * @see #createLoggedAutoResettingButton(String, EventLoop)
    */
   public static Trigger createLoggedAutoResettingButton(String key) {
-    return createLoggedAutoResettingButton(
-        key, CommandScheduler.getInstance().getDefaultButtonLoop());
+    return createLoggedAutoResettingButton(key, Scheduler.getDefault().getDefaultEventLoop());
   }
 
   /**

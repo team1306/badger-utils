@@ -7,7 +7,7 @@
     }
   ],
   "fileName": "badger-utils.json",
-  "frcYear": "2027",
+  "frcYear": "2027_alpha5",
   "jsonUrl": "https://raw.githubusercontent.com/team1306/badger-utils/master/vendordep.json",
   "name": "BadgerUtil",
   "jniDependencies": [],

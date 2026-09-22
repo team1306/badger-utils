@@ -3,8 +3,8 @@ package badgerutils.networktables;
 import static org.wpilib.units.Units.Seconds;
 
 import java.util.function.Consumer;
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import org.littletonrobotics.junction.networktables.LoggedNetworkBoolean;
+import org.littletonrobotics.junction.networktables.LoggedNetworkChooser;
 import org.wpilib.command3.Command;
 import org.wpilib.command3.Scheduler;
 import org.wpilib.command3.Trigger;
@@ -29,7 +29,7 @@ public final class LoggedNetworkTablesBuilder {
   }
 
   /**
-   * {@code eventLoop} defaults to the default button loop of the {@link CommandScheduler}
+   * {@code eventLoop} defaults to the default button loop of the {@link Scheduler}
    *
    * @see #createLoggedButton(String, EventLoop)
    */
@@ -57,7 +57,7 @@ public final class LoggedNetworkTablesBuilder {
   }
 
   /**
-   * {@code eventLoop} defaults to the default button loop of the {@link CommandScheduler}
+   * {@code eventLoop} defaults to the default button loop of the {@link Scheduler}
    *
    * @see #createLoggedAutoResettingButton(String, EventLoop)
    */
@@ -66,27 +66,27 @@ public final class LoggedNetworkTablesBuilder {
   }
 
   /**
-   * Creates a {@link LoggedDashboardChooser} that contains the name of each Enum constant as an
+   * Creates a {@link LoggedNetworkChooser} that contains the name of each Enum constant as an
    * option.
    *
    * @param key the key on NetworkTables
    * @param tEnum the class of the Enum
-   * @param startingValue the starting Enum value to use on the {@code LoggedDashboardChooser}
+   * @param startingValue the starting Enum value to use on the {@code LoggedNetworkChooser}
    * @param onValueChange a {@link Consumer} that gets called on startup, and whenever the selector
    *     changes with the value it changed to
    * @param <T> the type of the Enum
-   * @return the created and published {@code LoggedDashboardChooser}
+   * @return the created and published {@code LoggedNetworkChooser}
    */
-  public static <T extends Enum<T>> LoggedDashboardChooser<Enum<T>> createSelectorFromEnum(
+  public static <T extends Enum<T>> LoggedNetworkChooser<Enum<T>> createSelectorFromEnum(
       String key, Class<T> tEnum, Enum<T> startingValue, Consumer<Enum<T>> onValueChange) {
-    LoggedDashboardChooser<Enum<T>> chooser = new LoggedDashboardChooser<>(key);
+    LoggedNetworkChooser<Enum<T>> chooser = new LoggedNetworkChooser<>(key);
 
-    chooser.addDefaultOption(startingValue.toString(), startingValue);
+    chooser.addDefault(startingValue.toString(), startingValue);
     for (Enum<T> value : tEnum.getEnumConstants()) {
       if (value == startingValue) {
         continue;
       }
-      chooser.addOption(value.toString(), value);
+      chooser.add(value.toString(), value);
     }
     chooser.onChange(onValueChange);
     onValueChange.accept(startingValue);
@@ -98,7 +98,7 @@ public final class LoggedNetworkTablesBuilder {
    *
    * @see #createSelectorFromEnum(String, Class, Enum, Consumer)
    */
-  public static <T extends Enum<T>> LoggedDashboardChooser<Enum<T>> createSelectorFromEnum(
+  public static <T extends Enum<T>> LoggedNetworkChooser<Enum<T>> createSelectorFromEnum(
       String key, Class<T> tEnum, Consumer<Enum<T>> onValueChange) {
     return createSelectorFromEnum(key, tEnum, tEnum.getEnumConstants()[0], onValueChange);
   }

@@ -1,13 +1,11 @@
 package badgerutils.motor;
 
+import badgerutils.commands.Commands;
 import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
-
-import badgerutils.commands.Commands;
-
 import org.wpilib.command3.Command;
 import org.wpilib.command3.Trigger;
 

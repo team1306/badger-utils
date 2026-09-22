@@ -20,7 +20,7 @@ public class LocationUtils {
   public static Rotation2d getDirectionToLocation(
       Translation2d startPosition, Translation2d endPosition) {
     Translation2d difference = endPosition.minus(startPosition);
-    return difference.getAngle().orElse(Rotation2d.kZero);
+    return difference.getNorm() == 0.0 ? Rotation2d.kZero : difference.getAngle();
   }
 
   /**

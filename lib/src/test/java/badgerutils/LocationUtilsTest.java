@@ -23,6 +23,8 @@ public class LocationUtilsTest {
     end = new Translation2d(1, 3);
     result = LocationUtils.getDirectionToLocation(start, end);
     assertEquals(result.getDegrees(), 90, DELTA);
+
+    assertEquals(Rotation2d.kZero, LocationUtils.getDirectionToLocation(start, start));
   }
 
   @Test

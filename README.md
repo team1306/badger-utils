@@ -5,5 +5,5 @@ Utilities used by BadgerBOTS in robot code
 
 Add 
 ```
-https://raw.githubusercontent.com/team1306/badger-utils/master/vendordep.json
+https://raw.githubusercontent.com/team1306/badger-utils/main/vendordep.json
 ```

@@ -4,7 +4,7 @@ import org.littletonrobotics.junction.Logger;
 import org.wpilib.command3.Command;
 import org.wpilib.command3.Mechanism;
 
-public class TestSubsystem extends Mechanism {
+public class TestSubsystem implements Mechanism {
   private final TestIO io;
   private final TestIOInputsAutoLogged inputs = new TestIOInputsAutoLogged();
 

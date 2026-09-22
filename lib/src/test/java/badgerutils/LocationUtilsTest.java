@@ -24,7 +24,7 @@ public class LocationUtilsTest {
     result = LocationUtils.getDirectionToLocation(start, end);
     assertEquals(result.getDegrees(), 90, DELTA);
 
-    assertEquals(Rotation2d.kZero, LocationUtils.getDirectionToLocation(start, start));
+    assertEquals(Rotation2d.ZERO, LocationUtils.getDirectionToLocation(start, start));
   }
 
   @Test

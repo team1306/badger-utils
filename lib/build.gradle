@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'team1306'
-version = '2027.0.3'
+version = '2027.0.4'
 
 repositories {
     mavenCentral()
@@ -16,6 +16,9 @@ repositories {
     }
     maven {
         url "https://frcmaven.wpi.edu/artifactory/littletonrobotics-mvn-release/"
+    }
+    maven {
+        url "https://frcmaven.wpi.edu/artifactory/release/"
     }
 }
 
@@ -26,12 +29,12 @@ if (project.hasProperty('releaseMode')) {
 }
 wpilibRepositories.use2027Repos()
 
-def wpilibVersion = "2027.0.0-alpha-6"
-def advantageKitVersion = "27.0.0-alpha-4"
-def pheonix6Version = "26.50.0-alpha-1";
+def wpilibVersion = "2027.0.0-alpha-7"
+def advantageKitVersion = "27.0.0-alpha-5"
+def pheonix6Version = "26.70.0-alpha-2";
 
 dependencies {
-    compileOnly "org.wpilib:commands3-java:$wpilibVersion"
+    compileOnly "org.wpilib:commandsv3-java:$wpilibVersion"
 
     compileOnly "org.wpilib.ntcore:ntcore-java:$wpilibVersion"
     compileOnly "org.wpilib.wpiunits:wpiunits-java:$wpilibVersion"
@@ -39,6 +42,8 @@ dependencies {
     compileOnly "org.wpilib.wpilibj:wpilibj-java:$wpilibVersion"
     compileOnly "org.wpilib.wpiutil:wpiutil-java:$wpilibVersion"
     compileOnly "org.wpilib.hal:hal-java:$wpilibVersion"
+    compileOnly "org.wpilib.telemetry:telemetry-java:$wpilibVersion"
+    compileOnly "org.wpilib.tunables:tunables-java:$wpilibVersion"
 
     compileOnly "com.ctre.phoenix6:wpiapi-java:$pheonix6Version"
     compileOnly "org.littletonrobotics.akit:akit-java:$advantageKitVersion"
@@ -54,11 +59,13 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    testImplementation "org.wpilib:commands3-java:$wpilibVersion"
+    testImplementation "org.wpilib:commandsv3-java:$wpilibVersion"
     testImplementation "org.wpilib.wpiunits:wpiunits-java:$wpilibVersion"
     testImplementation "org.wpilib.wpimath:wpimath-java:$wpilibVersion"
     testImplementation "org.wpilib.wpilibj:wpilibj-java:$wpilibVersion"
     testImplementation "org.wpilib.wpiutil:wpiutil-java:$wpilibVersion"
+    testImplementation "org.wpilib.telemetry:telemetry-java:$wpilibVersion"
+    testImplementation "org.wpilib.tunables:tunables-java:$wpilibVersion"
 
     testImplementation "com.ctre.phoenix6:wpiapi-java:$pheonix6Version"
     testImplementation "org.littletonrobotics.akit:akit-java:$advantageKitVersion"

@@ -15,81 +15,93 @@ public class Commands {
    * @return a command builder stage that can be named and scheduled
    */
   public static NeedsNameBuilderStage createInstantCommand(Runnable runnable) {
-    return Command.noRequirements(coroutine -> {
-      runnable.run();
-    });
+    return Command.noRequirements(
+        coroutine -> {
+          runnable.run();
+        });
   }
 
   /**
-   * Creates a command that runs an action once when it starts and another action when it is cancelled.
-   * This command will never end naturally and has no requirements.
+   * Creates a command that runs an action once when it starts and another action when it is
+   * cancelled. This command will never end naturally and has no requirements.
    *
    * @param onStart the action to perform when the command begins
    * @param onEnd the action to perform when the command is canceled
    * @return a command builder stage that can be named and scheduled
    */
   public static NeedsNameBuilderStage createStartEndCommand(Runnable onStart, Runnable onEnd) {
-    return Command.noRequirements(coroutine -> {
-      onStart.run();
-      coroutine.park();
-    }).whenCanceled(onEnd);
+    return Command.noRequirements(
+            coroutine -> {
+              onStart.run();
+              coroutine.park();
+            })
+        .whenCanceled(onEnd);
   }
 
   /**
-   * Creates a command that runs an action once when it starts and another action when it is cancelled.
-   * This command will never end naturally.
+   * Creates a command that runs an action once when it starts and another action when it is
+   * cancelled. This command will never end naturally.
    *
    * @param onStart the action to perform when the command begins
    * @param onEnd the action to perform when the command is canceled
    * @param requirement the mechanism that owns this command
    * @return a command builder stage that can be named and scheduled
    */
-  public static NeedsNameBuilderStage createStartEndCommand(Runnable onStart, Runnable onEnd, Mechanism requirement) {
-    return requirement.run(coroutine -> {
-      onStart.run();
-      coroutine.park();
-    }).whenCanceled(onEnd);
+  public static NeedsNameBuilderStage createStartEndCommand(
+      Runnable onStart, Runnable onEnd, Mechanism requirement) {
+    return requirement
+        .run(
+            coroutine -> {
+              onStart.run();
+              coroutine.park();
+            })
+        .whenCanceled(onEnd);
   }
 
   /**
    * Creates a command that repeatedly executes the given action until the command is canceled.
    *
-   * <p>The returned command has no subsystem requirements. It runs {@code whileExecuting} once
-   * per scheduler iteration and continues indefinitely until canceled, at which point
-   * {@code onEnd} is executed.
+   * <p>The returned command has no subsystem requirements. It runs {@code whileExecuting} once per
+   * scheduler iteration and continues indefinitely until canceled, at which point {@code onEnd} is
+   * executed.
    *
    * @param whileExecuting the action to run repeatedly while the command is active
    * @param onEnd the action to perform when the command is canceled
    * @return a command builder stage that can be named and scheduled
    */
   public static NeedsNameBuilderStage createRunEndCommand(Runnable whileExecuting, Runnable onEnd) {
-    return Command.noRequirements(coroutine -> {
-      while (true) {
-        whileExecuting.run();
-        coroutine.yield();
-      }
-    }).whenCanceled(onEnd);
+    return Command.noRequirements(
+            coroutine -> {
+              while (true) {
+                whileExecuting.run();
+                coroutine.yield();
+              }
+            })
+        .whenCanceled(onEnd);
   }
 
   /**
    * Creates a command that repeatedly executes the given action until the command is canceled.
    *
-   * <p>The returned command runs {@code whileExecuting} once
-   * per scheduler iteration and continues indefinitely until canceled, at which point
-   * {@code onEnd} is executed.
+   * <p>The returned command runs {@code whileExecuting} once per scheduler iteration and continues
+   * indefinitely until canceled, at which point {@code onEnd} is executed.
    *
    * @param whileExecuting the action to run repeatedly while the command is active
    * @param onEnd the action to perform when the command is canceled
    * @param requirement the mechanism that owns this command
    * @return a command builder stage that can be named and scheduled
    */
-  public static NeedsNameBuilderStage createRunEndCommand(Runnable whileExecuting, Runnable onEnd, Mechanism requirement) {
-    return requirement.run(coroutine -> {
-      while (true) {
-        whileExecuting.run();
-        coroutine.yield();
-      }
-    }).whenCanceled(onEnd);
+  public static NeedsNameBuilderStage createRunEndCommand(
+      Runnable whileExecuting, Runnable onEnd, Mechanism requirement) {
+    return requirement
+        .run(
+            coroutine -> {
+              while (true) {
+                whileExecuting.run();
+                coroutine.yield();
+              }
+            })
+        .whenCanceled(onEnd);
   }
 
   /**

@@ -2,13 +2,14 @@ package badgerutils;
 
 import static edu.wpi.first.units.Units.Meters;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.units.measure.Distance;
 import org.junit.jupiter.api.Test;
 
-public class LocationUtilsTest {
+class LocationUtilsTest {
   private static final double DELTA = 1e-6;
 
   @Test
@@ -18,11 +19,15 @@ public class LocationUtilsTest {
 
     Rotation2d result = LocationUtils.getDirectionToLocation(start, end);
 
-    assertEquals(result.getDegrees(), 45, DELTA);
+    assertEquals(45, result.getDegrees(), DELTA);
 
     end = new Translation2d(1, 3);
     result = LocationUtils.getDirectionToLocation(start, end);
-    assertEquals(result.getDegrees(), 90, DELTA);
+    assertEquals(90, result.getDegrees(), DELTA);
+
+    end = new Translation2d(0, 2);
+    result = LocationUtils.getDirectionToLocation(start, end);
+    assertEquals(180, Math.abs(result.getDegrees()), DELTA);
   }
 
   @Test
@@ -34,7 +39,10 @@ public class LocationUtilsTest {
 
     Translation2d closest = LocationUtils.getClosestLocation(start, loc1, loc2, loc3);
 
-    assertEquals(closest, loc1);
+    assertSame(loc1, closest);
+
+    closest = LocationUtils.getClosestLocation(start, loc3, loc2, loc1);
+    assertSame(loc1, closest);
   }
 
   @Test
@@ -44,6 +52,8 @@ public class LocationUtilsTest {
 
     Distance distance = LocationUtils.getDistanceToLocation(pos1, pos2);
 
-    assertEquals(distance.in(Meters), 5, DELTA);
+    assertEquals(5, distance.in(Meters), DELTA);
+
+    assertEquals(5, LocationUtils.getDistanceToLocation(pos2, pos1).in(Meters), DELTA);
   }
 }

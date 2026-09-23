@@ -55,6 +55,7 @@ dependencies {
     testImplementation 'edu.wpi.first.wpimath:wpimath-java:2026.+'
     testImplementation 'edu.wpi.first.wpilibj:wpilibj-java:2026.+'
     testImplementation 'edu.wpi.first.wpiutil:wpiutil-java:2026.+'
+    testImplementation "com.ctre.phoenix6:wpiapi-java:26.3.0"
 
     testImplementation 'us.hebi.quickbuf:quickbuf-runtime:1.4'
 }

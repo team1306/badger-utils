@@ -23,6 +23,12 @@
       "errorMessage": "AdvantageKit is required!",
       "offlineFileName": "AdvantageKit.json",
       "onlineUrl": "https://github.com/Mechanical-Advantage/AdvantageKit/releases/latest/download/AdvantageKit.json"
+    },
+    {
+      "uuid": "e995de00-2c64-4df5-8831-c1441420ff19",
+      "errorMessage": "Phoenix 6 is required!",
+      "offlineFileName": "Phoenix6-26.3.0.json",
+      "onlineUrl": "https://maven.ctr-electronics.com/release/com/ctre/phoenix6/latest/Phoenix6-frc2026-latest.json"
     }
   ]
 }

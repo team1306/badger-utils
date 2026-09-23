@@ -92,4 +92,103 @@ public class TalonFXSignals {
         closedLoopTarget.getValue(),
         motor.getAppliedControl());
   }
+
+  /**
+   * Gets the TalonFX motor that provides these signals.
+   *
+   * @return the TalonFX motor
+   */
+  public TalonFX getMotor() {
+    return motor;
+  }
+
+  /**
+   * Refreshes and gets the motor velocity.
+   *
+   * @return the current motor velocity
+   */
+  public AngularVelocity getVelocity() {
+    velocity.refresh();
+    return velocity.getValue();
+  }
+
+  /**
+   * Refreshes and gets the motor position.
+   *
+   * @return the current motor position
+   */
+  public Angle getPosition() {
+    position.refresh();
+    return position.getValue();
+  }
+
+  /**
+   * Refreshes and gets the motor acceleration.
+   *
+   * @return the current motor acceleration
+   */
+  public AngularAcceleration getAcceleration() {
+    acceleration.refresh();
+    return acceleration.getValue();
+  }
+
+  /**
+   * Refreshes and gets the motor temperature.
+   *
+   * @return the current motor temperature
+   */
+  public Temperature getTemperature() {
+    temperature.refresh();
+    return temperature.getValue();
+  }
+
+  /**
+   * Refreshes and gets the motor supply current.
+   *
+   * @return the current motor supply current
+   */
+  public Current getSupplyCurrent() {
+    supplyCurrent.refresh();
+    return supplyCurrent.getValue();
+  }
+
+  /**
+   * Refreshes and gets the motor stator current.
+   *
+   * @return the current motor stator current
+   */
+  public Current getStatorCurrent() {
+    statorCurrent.refresh();
+    return statorCurrent.getValue();
+  }
+
+  /**
+   * Refreshes and gets the motor voltage.
+   *
+   * @return the current motor voltage
+   */
+  public Voltage getVoltage() {
+    voltage.refresh();
+    return voltage.getValue();
+  }
+
+  /**
+   * Refreshes and gets the closed-loop error.
+   *
+   * @return the current closed-loop error
+   */
+  public double getClosedLoopError() {
+    closedLoopError.refresh();
+    return closedLoopError.getValue();
+  }
+
+  /**
+   * Refreshes and gets the closed-loop target.
+   *
+   * @return the current closed-loop target
+   */
+  public double getClosedLoopTarget() {
+    closedLoopTarget.refresh();
+    return closedLoopTarget.getValue();
+  }
 }

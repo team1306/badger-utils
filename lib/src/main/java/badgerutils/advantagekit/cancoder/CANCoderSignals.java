@@ -59,4 +59,43 @@ public class CANCoderSignals {
         position.getValue(),
         absolutePosition.getValue());
   }
+
+  /**
+   * Gets the CANcoder that provides these signals.
+   *
+   * @return the CANcoder
+   */
+  public CANcoder getMotor() {
+    return encoder;
+  }
+
+  /**
+   * Refreshes and gets the encoder velocity.
+   *
+   * @return the current encoder velocity
+   */
+  public AngularVelocity getVelocity() {
+    velocity.refresh();
+    return velocity.getValue();
+  }
+
+  /**
+   * Refreshes and gets the encoder position.
+   *
+   * @return the current encoder position
+   */
+  public Angle getPosition() {
+    position.refresh();
+    return position.getValue();
+  }
+
+  /**
+   * Refreshes and gets the encoder absolute position.
+   *
+   * @return the current encoder absolute position
+   */
+  public Angle getAbsolutePosition() {
+    absolutePosition.refresh();
+    return position.getValue();
+  }
 }

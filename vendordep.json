@@ -8,7 +8,7 @@
   ],
   "fileName": "badger-utils.json",
   "frcYear": "2026",
-  "jsonUrl": "https://raw.githubusercontent.com/team1306/badger-utils/master/vendordep.json",
+  "jsonUrl": "https://raw.githubusercontent.com/team1306/badger-utils/2026-version/vendordep.json",
   "name": "BadgerUtil",
   "jniDependencies": [],
   "mavenUrls": [

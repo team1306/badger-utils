@@ -49,7 +49,7 @@ public class TalonFXSignals {
   }
 
   /**
-   * Refreshes all of the signals from the motor and checks if the motor is connected.
+   * Performs a non-blocking refresh of all motor signals and checks if the motor is connected.
    *
    * @return true if the motor is connected, false otherwise
    */
@@ -103,7 +103,7 @@ public class TalonFXSignals {
   }
 
   /**
-   * Refreshes and gets the motor velocity.
+   * Performs a non-blocking refresh and gets the latest cached motor velocity.
    *
    * @return the current motor velocity
    */
@@ -113,7 +113,7 @@ public class TalonFXSignals {
   }
 
   /**
-   * Refreshes and gets the motor position.
+   * Performs a non-blocking refresh and gets the latest cached motor position.
    *
    * @return the current motor position
    */
@@ -123,7 +123,7 @@ public class TalonFXSignals {
   }
 
   /**
-   * Refreshes and gets the motor acceleration.
+   * Performs a non-blocking refresh and gets the latest cached motor acceleration.
    *
    * @return the current motor acceleration
    */
@@ -133,7 +133,7 @@ public class TalonFXSignals {
   }
 
   /**
-   * Refreshes and gets the motor temperature.
+   * Performs a non-blocking refresh and gets the latest cached motor temperature.
    *
    * @return the current motor temperature
    */
@@ -143,7 +143,7 @@ public class TalonFXSignals {
   }
 
   /**
-   * Refreshes and gets the motor supply current.
+   * Performs a non-blocking refresh and gets the latest cached motor supply current.
    *
    * @return the current motor supply current
    */
@@ -153,7 +153,7 @@ public class TalonFXSignals {
   }
 
   /**
-   * Refreshes and gets the motor stator current.
+   * Performs a non-blocking refresh and gets the latest cached motor stator current.
    *
    * @return the current motor stator current
    */
@@ -163,7 +163,7 @@ public class TalonFXSignals {
   }
 
   /**
-   * Refreshes and gets the motor voltage.
+   * Performs a non-blocking refresh and gets the latest cached motor voltage.
    *
    * @return the current motor voltage
    */
@@ -173,7 +173,7 @@ public class TalonFXSignals {
   }
 
   /**
-   * Refreshes and gets the closed-loop error.
+   * Performs a non-blocking refresh and gets the latest cached closed-loop error.
    *
    * @return the current closed-loop error
    */
@@ -183,7 +183,7 @@ public class TalonFXSignals {
   }
 
   /**
-   * Refreshes and gets the closed-loop target.
+   * Performs a non-blocking refresh and gets the latest cached closed-loop target.
    *
    * @return the current closed-loop target
    */

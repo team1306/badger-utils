@@ -33,7 +33,7 @@ public class CANCoderSignals {
   }
 
   /**
-   * Refreshes all of the signals from the encoder and checks if the encoder is connected.
+   * Performs a non-blocking refresh of all encoder signals and checks if the encoder is connected.
    *
    * @return true if the encoder is connected, false otherwise
    */
@@ -65,12 +65,12 @@ public class CANCoderSignals {
    *
    * @return the CANcoder
    */
-  public CANcoder getMotor() {
+  public CANcoder getCANCoder() {
     return encoder;
   }
 
   /**
-   * Refreshes and gets the encoder velocity.
+   * Performs a non-blocking refresh and gets the latest cached encoder velocity.
    *
    * @return the current encoder velocity
    */
@@ -80,7 +80,7 @@ public class CANCoderSignals {
   }
 
   /**
-   * Refreshes and gets the encoder position.
+   * Performs a non-blocking refresh and gets the latest cached encoder position.
    *
    * @return the current encoder position
    */
@@ -90,7 +90,7 @@ public class CANCoderSignals {
   }
 
   /**
-   * Refreshes and gets the encoder absolute position.
+   * Performs a non-blocking refresh and gets the latest cached encoder absolute position.
    *
    * @return the current encoder absolute position
    */

@@ -6,6 +6,7 @@ import badgerutils.advantagekit.talonfx.TalonFXSignals;
 import badgerutils.motor.MotorGroup;
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.MotionMagicTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -23,6 +24,8 @@ public class TestIOReal implements TestIO {
   private final MotorGroup motorGroup;
 
   private final DutyCycleOut dutyCycleRequest;
+
+  private final MotionMagicTorqueCurrentFOC positionRequest;
 
   public TestIOReal() {
     leftMotor = new TalonFX(0);
@@ -43,6 +46,7 @@ public class TestIOReal implements TestIO {
             "Test", SlotConfigs.from(TestConstants.CW_CONFIG.Slot0), leftMotor, rightMotor);
 
     dutyCycleRequest = new DutyCycleOut(0).withEnableFOC(true);
+    positionRequest = new MotionMagicTorqueCurrentFOC(0);
   }
 
   @Override

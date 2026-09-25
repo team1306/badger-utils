@@ -49,7 +49,7 @@ public class TalonFXSignals {
   }
 
   /**
-   * Refreshes all of the signals from the motor and checks if the motor is connected.
+   * Performs a non-blocking refresh of all motor signals and checks if the motor is connected.
    *
    * @return true if the motor is connected, false otherwise
    */
@@ -91,5 +91,104 @@ public class TalonFXSignals {
         closedLoopError.getValue(),
         closedLoopTarget.getValue(),
         motor.getAppliedControl());
+  }
+
+  /**
+   * Gets the TalonFX motor that provides these signals.
+   *
+   * @return the TalonFX motor
+   */
+  public TalonFX getMotor() {
+    return motor;
+  }
+
+  /**
+   * Performs a non-blocking refresh and gets the latest cached motor velocity.
+   *
+   * @return the current motor velocity
+   */
+  public AngularVelocity getVelocity() {
+    velocity.refresh();
+    return velocity.getValue();
+  }
+
+  /**
+   * Performs a non-blocking refresh and gets the latest cached motor position.
+   *
+   * @return the current motor position
+   */
+  public Angle getPosition() {
+    position.refresh();
+    return position.getValue();
+  }
+
+  /**
+   * Performs a non-blocking refresh and gets the latest cached motor acceleration.
+   *
+   * @return the current motor acceleration
+   */
+  public AngularAcceleration getAcceleration() {
+    acceleration.refresh();
+    return acceleration.getValue();
+  }
+
+  /**
+   * Performs a non-blocking refresh and gets the latest cached motor temperature.
+   *
+   * @return the current motor temperature
+   */
+  public Temperature getTemperature() {
+    temperature.refresh();
+    return temperature.getValue();
+  }
+
+  /**
+   * Performs a non-blocking refresh and gets the latest cached motor supply current.
+   *
+   * @return the current motor supply current
+   */
+  public Current getSupplyCurrent() {
+    supplyCurrent.refresh();
+    return supplyCurrent.getValue();
+  }
+
+  /**
+   * Performs a non-blocking refresh and gets the latest cached motor stator current.
+   *
+   * @return the current motor stator current
+   */
+  public Current getStatorCurrent() {
+    statorCurrent.refresh();
+    return statorCurrent.getValue();
+  }
+
+  /**
+   * Performs a non-blocking refresh and gets the latest cached motor voltage.
+   *
+   * @return the current motor voltage
+   */
+  public Voltage getVoltage() {
+    voltage.refresh();
+    return voltage.getValue();
+  }
+
+  /**
+   * Performs a non-blocking refresh and gets the latest cached closed-loop error.
+   *
+   * @return the current closed-loop error
+   */
+  public double getClosedLoopError() {
+    closedLoopError.refresh();
+    return closedLoopError.getValue();
+  }
+
+  /**
+   * Performs a non-blocking refresh and gets the latest cached closed-loop target.
+   *
+   * @return the current closed-loop target
+   */
+  public double getClosedLoopTarget() {
+    closedLoopTarget.refresh();
+    return closedLoopTarget.getValue();
   }
 }

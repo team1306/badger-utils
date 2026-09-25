@@ -33,7 +33,7 @@ public class CANCoderSignals {
   }
 
   /**
-   * Refreshes all of the signals from the encoder and checks if the encoder is connected.
+   * Performs a non-blocking refresh of all encoder signals and checks if the encoder is connected.
    *
    * @return true if the encoder is connected, false otherwise
    */
@@ -58,5 +58,44 @@ public class CANCoderSignals {
         velocity.getValue(),
         position.getValue(),
         absolutePosition.getValue());
+  }
+
+  /**
+   * Gets the CANcoder that provides these signals.
+   *
+   * @return the CANcoder
+   */
+  public CANcoder getCANCoder() {
+    return encoder;
+  }
+
+  /**
+   * Performs a non-blocking refresh and gets the latest cached encoder velocity.
+   *
+   * @return the current encoder velocity
+   */
+  public AngularVelocity getVelocity() {
+    velocity.refresh();
+    return velocity.getValue();
+  }
+
+  /**
+   * Performs a non-blocking refresh and gets the latest cached encoder position.
+   *
+   * @return the current encoder position
+   */
+  public Angle getPosition() {
+    position.refresh();
+    return position.getValue();
+  }
+
+  /**
+   * Performs a non-blocking refresh and gets the latest cached encoder absolute position.
+   *
+   * @return the current encoder absolute position
+   */
+  public Angle getAbsolutePosition() {
+    absolutePosition.refresh();
+    return position.getValue();
   }
 }
